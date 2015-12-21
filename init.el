@@ -56,9 +56,10 @@
 (global-unset-key [up])
 (global-unset-key [down])
 
-;; Complete
+;; Coding tweaks
 
 (global-company-mode t)
+(eldoc-mode t)
 
 ;; Smart parens
 (require 'smartparens-config)
@@ -78,3 +79,6 @@
 (global-set-key (kbd "C-M->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-M-<") 'mc/mark-previous-like-this)
 
+;; Magit
+
+(global-set-key (kbd "C-x g") 'magit-status)
