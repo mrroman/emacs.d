@@ -9,67 +9,42 @@
 
 (package-initialize)
 
-(defun package-required (pkg-list)
+(defun my/install-package (pkg-name)
+  (unless (package-installed-p pkg-name)
+    (package-install pkg-name)))
+
+(defvar my/configs-directory 
+  (concat (file-name-as-directory user-emacs-directory) "configs/"))
+
+(defun my/load-config (name)
+  (let ((file-with-path (concat my/configs-directory name ".el")))
+    (when (file-exists-p file-with-path)
+      (load-file file-with-path))))
+
+(defun my/package-required (pkg-list)
   (dolist (pkg-name pkg-list)
-    (unless (package-installed-p pkg-name)
-      (package-install pkg-name))))
+    (my/install-package pkg-name)
+    (my/load-config (symbol-name pkg-name))))
 
-(package-required '(color-theme-wombat
-		    company
-		    helm
-		    multiple-cursors
-		    ace-jump-mode
-		    whole-line-or-region
-		    cider
-		    smartparens
-		    undo-tree
-		    magit))
+(my/package-required '(color-theme-wombat
+		       company
+		       helm
+		       multiple-cursors
+		       ace-jump-mode
+		       whole-line-or-region
+		       cider
+		       smartparens
+		       undo-tree
+		       magit
+		       projectile
+		       helm-projectile))
 
-;; color themes
-
-(require 'color-theme-wombat)
-(color-theme-wombat)
-
-;; UI tweaks
-
-(setq inhibit-startup-screen t)
-(setq initial-scratch-message nil)
-
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(column-number-mode t)
-(show-paren-mode)
-
-;; Editing tweaks
-
-(delete-selection-mode t)
-(whole-line-or-region-mode)
-
-(setq backup-directory-alist
-      `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
-
-(global-unset-key [left])
-(global-unset-key [right])
-(global-unset-key [up])
-(global-unset-key [down])
+(my/load-config "ui-tweaks")
+(my/load-config "editing")
 
 ;; Coding tweaks
 
 (global-company-mode t)
-(eldoc-mode t)
-
-;; Smart parens
-(require 'smartparens-config)
-
-(add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
-(add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode)
-
-;; Helm mode
-
-(helm-mode)
 
 ;; Window navigation
 (windmove-default-keybindings)

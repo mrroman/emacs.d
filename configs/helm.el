@@ -1,0 +1,2 @@
+;; Helm mode
+(helm-mode)
