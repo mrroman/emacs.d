@@ -43,7 +43,8 @@
 		       undo-tree
 		       magit
 		       projectile
-		       helm-projectile))
+		       helm-projectile
+		       expand-region))
 
 (my/load-config "ui-tweaks")
 (my/load-config "editing")
@@ -70,7 +71,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (helm-projectile projectile magit undo-tree smartparens cider whole-line-or-region ace-jump-mode multiple-cursors helm company color-theme-wombat))))
+    (expand-region helm-projectile projectile magit undo-tree smartparens cider whole-line-or-region ace-jump-mode multiple-cursors helm company color-theme-wombat))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

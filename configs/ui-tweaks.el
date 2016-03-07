@@ -14,7 +14,7 @@
 (require 'color-theme-wombat)
 (color-theme-wombat)
 
-(global-hl-line-mode +1)
+;; (global-hl-line-mode +1)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
