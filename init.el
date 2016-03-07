@@ -49,7 +49,8 @@
 		       helm-projectile
 		       expand-region
 		       helm-descbinds
-		       helm-ag))
+		       helm-ag
+		       helm-google))
 
 (my/load-config "ui-tweaks")
 (my/load-config "editing")
