@@ -32,22 +32,32 @@
     (my/install-package pkg-name)
     (my/load-config (symbol-name pkg-name))))
 
-(my/package-required '(color-theme-wombat
+(my/package-required '(f
+		       color-theme-wombat
 		       company
 		       helm
 		       multiple-cursors
 		       ace-jump-mode
 		       whole-line-or-region
 		       cider
+		       clj-refactor
+		       clojure-mode-extra-font-locking
 		       smartparens
 		       undo-tree
 		       magit
 		       projectile
 		       helm-projectile
-		       expand-region))
+		       expand-region
+		       helm-descbinds
+		       helm-ag))
 
 (my/load-config "ui-tweaks")
 (my/load-config "editing")
+
+(require 'f)
+(setq custom-file "~/.emacs.d/custom.el")
+(f-touch custom-file)
+(load custom-file)
 
 ;; Coding tweaks
 
@@ -64,17 +74,3 @@
 ;; Magit
 
 (global-set-key (kbd "C-x g") 'magit-status)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (expand-region helm-projectile projectile magit undo-tree smartparens cider whole-line-or-region ace-jump-mode multiple-cursors helm company color-theme-wombat))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
