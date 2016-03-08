@@ -51,12 +51,20 @@
 		       expand-region
 		       helm-descbinds
 		       helm-ag
-		       helm-google))
+		       helm-google
+
+		       go-mode
+		       go-eldoc
+		       company-go
+               go-projectile
+               gotest))
 
 (my/load-config "ui-tweaks")
 (my/load-config "editing")
 (my/load-config "coding")
 (my/load-config "keybindings")
+
+(my/load-config "golang")
 
 (require 'f)
 (setq custom-file "~/.emacs.d/custom.el")
