@@ -13,3 +13,8 @@
 ;; Terminal
 
 (global-set-key (kbd "C-c t") 'ansi-term)
+
+;; Turn of annoying keyscores
+
+(global-unset-key (kbd "C-<previous>"))
+(global-unset-key (kbd "C-<next>"))
