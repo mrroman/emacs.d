@@ -55,24 +55,10 @@
 
 (my/load-config "ui-tweaks")
 (my/load-config "editing")
+(my/load-config "coding")
+(my/load-config "keybindings")
 
 (require 'f)
 (setq custom-file "~/.emacs.d/custom.el")
 (f-touch custom-file)
 (load custom-file)
-
-;; Coding tweaks
-
-(global-company-mode t)
-
-;; Window navigation
-(windmove-default-keybindings)
-
-;; Acejump and Multicursors
-(global-set-key (kbd "C->") 'ace-jump-mode)
-(global-set-key (kbd "C-M->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-M-<") 'mc/mark-previous-like-this)
-
-;; Magit
-
-(global-set-key (kbd "C-x g") 'magit-status)
