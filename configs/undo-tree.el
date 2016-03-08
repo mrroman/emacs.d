@@ -1,0 +1,2 @@
+(global-undo-tree-mode)
+
