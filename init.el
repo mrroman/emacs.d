@@ -57,7 +57,9 @@
 		       go-eldoc
 		       company-go
                go-projectile
-               gotest))
+               gotest
+
+               smart-mode-line))
 
 (my/load-config "ui-tweaks")
 (my/load-config "editing")
