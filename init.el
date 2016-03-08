@@ -34,6 +34,7 @@
 
 (my/package-required '(f
 		       color-theme-wombat
+		       spacemacs-theme
 		       company
 		       helm
 		       multiple-cursors

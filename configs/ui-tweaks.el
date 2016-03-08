@@ -11,8 +11,9 @@
 
 ;; color themes
 
-(require 'color-theme-wombat)
-(color-theme-wombat)
+;; (require 'color-theme-wombat)
+;; (color-theme-wombat)
+(load-theme 'spacemacs-dark t)
 
 ;; (global-hl-line-mode +1)
 
