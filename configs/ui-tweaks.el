@@ -23,3 +23,8 @@
 (setq scroll-margin 0
       scroll-conservatively 100000
       scroll-preserve-screen-position 1)
+
+;; font size
+
+(case system-type
+  (darwin (set-frame-font "Fira Code 14")))
