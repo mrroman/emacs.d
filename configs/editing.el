@@ -23,5 +23,7 @@
 (setq whitespace-line-column 80)
 (setq whitespace-style '(face tabs empty trailing lines-tail))
 
-(add-hook 'text-mode-hook (lambda ()
-			    (whitespace-mode t)))
+(custom-set-faces
+ '(whitespace-empty ((t (:background "#e0211d")))))
+
+(global-whitespace-mode)
