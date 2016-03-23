@@ -59,7 +59,8 @@
                go-projectile
                gotest
 
-               smart-mode-line))
+               smart-mode-line
+               beacon))
 
 (my/load-config "ui-tweaks")
 (my/load-config "editing")
