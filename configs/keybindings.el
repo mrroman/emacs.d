@@ -1,5 +1,5 @@
 ;; Window navigation
-(windmove-default-keybindings)
+(global-set-key (kbd "C-x o") 'ace-window)
 
 ;; Acejump and Multicursors
 (global-set-key (kbd "C->") 'ace-jump-mode)

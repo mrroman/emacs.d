@@ -60,7 +60,8 @@
                gotest
 
                smart-mode-line
-               beacon))
+               beacon
+               ace-window))
 
 (my/load-config "ui-tweaks")
 (my/load-config "editing")
