@@ -40,12 +40,17 @@
 		       multiple-cursors
 		       ace-jump-mode
 		       whole-line-or-region
+
 		       cider
 		       clj-refactor
 		       clojure-mode-extra-font-locking
+               flycheck-clojure
+
+               flycheck-pos-tip
 		       smartparens
 		       undo-tree
 		       magit
+
 		       projectile
 		       helm-projectile
 		       expand-region
