@@ -1,6 +1,12 @@
+;;; init --- Configuration and packages setup
+;;;
+;;; Commentary:
+
 ;; set up packages
 
 (require 'package)
+
+;;; Code:
 
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
@@ -16,18 +22,22 @@
 (package-initialize)
 
 (defun my/install-package (pkg-name)
+  "Install package PKG-NAME unless it is not already installed."
   (unless (package-installed-p pkg-name)
     (package-install pkg-name)))
 
-(defvar my/configs-directory 
-  (concat (file-name-as-directory user-emacs-directory) "configs/"))
+(defvar my/configs-directory
+  (concat (file-name-as-directory user-emacs-directory) "configs/")
+  "Directory with configuration files of installed packages.")
 
 (defun my/load-config (name)
+  "Load configuration for package NAME from configuration directory."
   (let ((file-with-path (concat my/configs-directory name ".el")))
     (when (file-exists-p file-with-path)
       (load-file file-with-path))))
 
 (defun my/package-required (pkg-list)
+  "Install and configure all packages on PKG-LIST."
   (dolist (pkg-name pkg-list)
     (my/install-package pkg-name)
     (my/load-config (symbol-name pkg-name))))
@@ -66,7 +76,8 @@
 
                smart-mode-line
                beacon
-               ace-window))
+               ace-window
+               aggressive-indent))
 
 (my/load-config "ui-tweaks")
 (my/load-config "editing")
@@ -79,3 +90,6 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (f-touch custom-file)
 (load custom-file)
+
+(provide 'init)
+;; init ends here
