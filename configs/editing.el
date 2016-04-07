@@ -35,4 +35,8 @@
   (darwin (setq org-default-notes-file "~/Documents/organizer.org"))
   (t (setq org-default-notes-file "~/organizer.org")))
 
+
 (global-set-key (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "<f2>") (lambda ()
+                               (interactive)
+                               (find-file org-default-notes-file)))
