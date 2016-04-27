@@ -74,6 +74,9 @@
                go-projectile
                gotest
 
+               cmake-ide
+               company-c-headers
+
                smart-mode-line
                beacon
                ace-window
@@ -85,6 +88,8 @@
 (my/load-config "keybindings")
 
 (my/load-config "golang")
+(if (equalp system-type 'gnu/linux)
+    (load-config "linux"))
 
 (require 'f)
 (setq custom-file "~/.emacs.d/custom.el")
