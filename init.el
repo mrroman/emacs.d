@@ -89,7 +89,7 @@
 
 (my/load-config "golang")
 (if (equalp system-type 'gnu/linux)
-    (load-config "linux"))
+    (my/load-config "linux"))
 
 (require 'f)
 (setq custom-file "~/.emacs.d/custom.el")
