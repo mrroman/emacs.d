@@ -86,10 +86,8 @@
 
 (my/load-config "golang")
 
-(require 'f)
-(setq custom-file "~/.emacs.d/custom.el")
-(f-touch custom-file)
-(load custom-file)
+(setq custom-file (concat (file-name-as-directory user-emacs-directory) "custom.el"))
+(load custom-file 'noerror)
 
 (provide 'init)
 ;; init ends here

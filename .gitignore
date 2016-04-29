@@ -16,6 +16,8 @@ places
 .smex-items
 savefile/
 projectile-bookmarks.eld
+projectile.cache
+flycheck_init.el
 session*
 .cask
 tramp

@@ -27,4 +27,5 @@
 ;; font size
 
 (case system-type
-  (darwin (set-frame-font "Fira Code 14")))
+  (darwin (set-frame-font "Fira Code 14"))
+  (windows-nt (set-frame-font "Iosevka 11")))
