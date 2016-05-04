@@ -12,7 +12,9 @@
 
 ;; Terminal
 
-(global-set-key (kbd "C-c t") 'ansi-term)
+(global-set-key (kbd "C-c t") (lambda ()
+                                (interactive)
+                                (ansi-term (getenv "SHELL"))))
 
 ;; Turn of annoying keyscores
 

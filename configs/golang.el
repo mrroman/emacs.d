@@ -30,7 +30,10 @@
        (go-eldoc-setup)
 
        ;; CamelCase aware editing operations
-       (subword-mode +1))
+       (subword-mode +1)
+
+       ;; Turn off smartparens strict mode
+       (smartparens-strict-mode 0))
 
      (setq prelude-go-mode-hook 'prelude-go-mode-defaults)
 
