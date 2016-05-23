@@ -77,6 +77,11 @@
                cmake-ide
                company-c-headers
 
+               nvm
+               js2-mode
+               js2-refactor
+               company-tern
+
                smart-mode-line
                beacon
                ace-window
