@@ -96,10 +96,7 @@
 (if (equalp system-type 'gnu/linux)
     (my/load-config "linux"))
 
-(require 'f)
-(setq custom-file "~/.emacs.d/custom.el")
-(f-touch custom-file)
-(load custom-file)
+(my/load-config "custom-file")
 
 (provide 'init)
 ;; init ends here
