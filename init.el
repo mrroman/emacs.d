@@ -57,7 +57,6 @@
                flycheck-clojure
 
                flycheck-pos-tip
-		       smartparens
 		       undo-tree
 		       magit
 
