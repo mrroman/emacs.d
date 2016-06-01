@@ -30,3 +30,7 @@
   (darwin (set-frame-font "Fira Code 14"))
   (windows-nt (set-frame-font "Iosevka 11"))
   (gnu/linux (set-frame-font "Iosevka 13")))
+
+;; translucency
+
+(add-to-list 'default-frame-alist '(alpha . (95 . 50)))
