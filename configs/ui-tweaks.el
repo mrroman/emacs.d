@@ -13,7 +13,13 @@
 
 ;; (require 'color-theme-wombat)
 ;; (color-theme-wombat)
-(load-theme 'spacemacs-dark t)
+;; (load-theme 'spacemacs-dark t)
+;; (load-theme 'tango-plus t)
+;; (load-theme 'minimal-light t)
+;;(require 'moe-theme)
+;;(load-theme 'moe-light t)
+
+(load-theme 'leuven t)
 
 ;; (global-hl-line-mode +1)
 
@@ -28,9 +34,10 @@
 
 (case system-type
   (darwin (set-frame-font "Fira Code 14"))
-  (windows-nt (set-frame-font "Iosevka 11"))
-  (gnu/linux (set-frame-font "Iosevka 13")))
+  (windows-nt (set-frame-font "Iosevka Term 11"))
+  (gnu/linux (set-frame-font "Iosevka Term 13")))
 
 ;; translucency
 
-(add-to-list 'default-frame-alist '(alpha . (95 . 50)))
+;; (add-to-list 'default-frame-alist '(alpha . (100 . 75)))
+
