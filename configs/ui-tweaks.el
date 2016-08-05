@@ -12,14 +12,15 @@
 ;; color themes
 
 ;; (require 'color-theme-wombat)
-;; (color-theme-wombat)
-;; (load-theme 'spacemacs-dark t)
+;; (load-theme 'wombat t)
+
+(load-theme 'spacemacs-dark t)
 ;; (load-theme 'tango-plus t)
 ;; (load-theme 'minimal-light t)
 ;;(require 'moe-theme)
 ;;(load-theme 'moe-light t)
 
-(load-theme 'leuven t)
+;; (load-theme 'leuven t)
 
 ;; (global-hl-line-mode +1)
 
