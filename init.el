@@ -45,7 +45,7 @@
 (my/package-required '(f
 		       color-theme-wombat
 		       spacemacs-theme
-               leuven-theme
+               moe-theme
 		       company
 		       helm
 		       multiple-cursors
