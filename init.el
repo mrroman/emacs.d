@@ -93,6 +93,7 @@
 (my/load-config "keybindings")
 
 (my/load-config "golang")
+(my/load-config "js")
 (if (equalp system-type 'gnu/linux)
     (my/load-config "linux"))
 
