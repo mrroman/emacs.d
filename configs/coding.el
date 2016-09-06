@@ -21,3 +21,6 @@
 ;; enable electric pair mode
 
 (electric-pair-mode t)
+
+;; auto select help window
+(setq help-window-select t)
