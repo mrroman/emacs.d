@@ -21,6 +21,9 @@
 
 (package-initialize)
 
+(when (functionp 'exec-path-from-shell-initialize)
+  (exec-path-from-shell-initialize))
+
 (defun my/install-package (pkg-name)
   "Install package PKG-NAME unless it is not already installed."
   (unless (package-installed-p pkg-name)
@@ -51,6 +54,7 @@
 		       multiple-cursors
 		       ace-jump-mode
 		       whole-line-or-region
+               exec-path-from-shell
 
 		       cider
 		       clj-refactor
@@ -80,6 +84,7 @@
                nvm
                js2-mode
                js2-refactor
+               web-mode
                company-tern
 
                smart-mode-line
