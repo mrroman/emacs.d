@@ -21,7 +21,11 @@
 
 (package-initialize)
 
+(require 'exec-path-from-shell)
 (when (functionp 'exec-path-from-shell-initialize)
+  (add-to-list 'exec-path-from-shell-variables "GOROOT")
+  (add-to-list 'exec-path-from-shell-variables "ANDROID_HOME")
+  (add-to-list 'exec-path-from-shell-variables "GOPATH")
   (exec-path-from-shell-initialize))
 
 (defun my/install-package (pkg-name)
