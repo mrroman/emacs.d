@@ -28,6 +28,8 @@
 
 (global-whitespace-mode)
 
+(add-hook 'before-save-hook 'whitespace-cleanup)
+
 ;; org mode
 
 (case system-type
