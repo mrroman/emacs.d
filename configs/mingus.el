@@ -1,5 +1,9 @@
 (require 'mingus)
 
+(dolist (station '(("SomaFM - GrooveSalad" . "http://ice1.somafm.com/groovesalad-128-mp3")
+                   ("SomaFM - Beat Blender" . "http://ice1.somafm.com/beatblender-128-mp3")))
+  (add-to-list 'mingus-stream-alist station))
+
 (defun my/mingus-play-toggle ()
   "Toggle playing MPD. If MPD was playing it pauses. If MPD was paused it plays. If MPD was stopeed it starts playing."
   (interactive)
