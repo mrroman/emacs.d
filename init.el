@@ -103,6 +103,7 @@
 
 (my/load-config "golang")
 (my/load-config "js")
+(my/load-config "org-mode")
 (if (equalp system-type 'gnu/linux)
     (my/load-config "linux"))
 
