@@ -16,3 +16,4 @@
     (kill-buffer)))
 
 (global-set-key [f5] 'my/mingus-play-toggle)
+(global-set-key (kbd "<S-f5>") 'mingus)
