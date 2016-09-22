@@ -94,7 +94,8 @@
                smart-mode-line
                beacon
                ace-window
-               aggressive-indent))
+               aggressive-indent
+               neotree))
 
 (my/load-config "ui-tweaks")
 (my/load-config "editing")
