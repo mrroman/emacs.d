@@ -33,5 +33,5 @@
     (ansi-color-process-output nil)
     (setq-local comint-last-output-start (point-marker))))
 
-(setq compilation-scroll-output t)
+(setq-default compilation-scroll-output t)
 (add-hook 'compilation-filter-hook #'endless/colorize-compilation)
