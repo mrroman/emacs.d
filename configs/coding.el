@@ -24,3 +24,14 @@
 
 ;; auto select help window
 (setq help-window-select t)
+
+;; colorize compilation buffer
+(require 'ansi-color)
+(defun endless/colorize-compilation ()
+  "Colorize from `compilation-filter-start' to `point'."
+  (when (eq major-mode 'compilation-mode)
+    (ansi-color-process-output nil)
+    (setq-local comint-last-output-start (point-marker))))
+
+(setq compilation-scroll-output t)
+(add-hook 'compilation-filter-hook #'endless/colorize-compilation)
