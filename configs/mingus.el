@@ -1,7 +1,9 @@
 (require 'mingus)
 
 (dolist (station '(("SomaFM - GrooveSalad" . "http://ice1.somafm.com/groovesalad-128-mp3")
-                   ("SomaFM - Beat Blender" . "http://ice1.somafm.com/beatblender-128-mp3")))
+                   ("SomaFM - Beat Blender" . "http://ice1.somafm.com/beatblender-128-mp3")
+                   ("SomaFM - Metal Detector" . "http://ice1.somafm.com/metal-128-mp3")
+                   ("SomaFM - Illinois Street Lounge" . "http://ice1.somafm.com/illstreet-128-mp3")))
   (add-to-list 'mingus-stream-alist station))
 
 (defun my/mingus-play-toggle ()
