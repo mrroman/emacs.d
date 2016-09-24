@@ -20,7 +20,7 @@
         (lexical-let* ((package-json (json-read-file package-json-file))
                        (dev-deps (alist-get 'devDependencies package-json)))
           (cond ((alist-get 'eslint dev-deps)
-                 (setq-local flycheck-javascript-eslint-executable (my/npm-dep-bin-path "eshint")))
+                 (setq-local flycheck-javascript-eslint-executable (my/npm-dep-bin-path "eslint")))
                 ((alist-get 'jshint dev-deps)
                  (setq-local flycheck-javascript-jshint-executable (my/npm-dep-bin-path "jshint")))))))))
 
