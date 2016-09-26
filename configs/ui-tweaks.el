@@ -11,22 +11,8 @@
 
 ;; color themes
 
-;; (require 'color-theme-wombat)
-;; (load-theme 'wombat t)
-
-;; (load-theme 'spacemacs-dark t)
-;; (load-theme 'tango-plus t)
-;; (load-theme 'minimal-light t)
-(require 'moe-theme)
-
-(setq moe-theme-highlight-buffer-id t)
-(moe-theme-set-color 'cyan)
-
-(moe-light)
-
-;; (load-theme 'leuven t)
-
-;; (global-hl-line-mode +1)
+(require 'color-theme-wombat)
+(load-theme 'wombat t)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -45,4 +31,3 @@
 ;; translucency
 
 ;; (add-to-list 'default-frame-alist '(alpha . (100 . 75)))
-

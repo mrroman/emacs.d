@@ -11,7 +11,7 @@
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives
-	     '("marmalade" . "http://marmalade-repo.org/packages/"))
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 ;; load package archives if no packages installed
 
@@ -49,53 +49,52 @@
     (my/install-package pkg-name)
     (my/load-config (symbol-name pkg-name))))
 
-(my/package-required '(f
-		       color-theme-wombat
-		       spacemacs-theme
-               moe-theme
-		       company
-		       helm
-		       multiple-cursors
-		       ace-jump-mode
-		       whole-line-or-region
-               exec-path-from-shell
+(my/package-required
+ '(f
+   color-theme-wombat
+   company
+   helm
+   multiple-cursors
+   ace-jump-mode
+   whole-line-or-region
+   exec-path-from-shell
 
-		       cider
-		       clj-refactor
-		       clojure-mode-extra-font-locking
-               flycheck-clojure
+   cider
+   clj-refactor
+   clojure-mode-extra-font-locking
+   flycheck-clojure
 
-               flycheck-pos-tip
-		       undo-tree
-		       magit
+   flycheck-pos-tip
+   undo-tree
+   magit
 
-		       projectile
-		       helm-projectile
-		       expand-region
-		       helm-descbinds
-		       helm-ag
-		       helm-google
+   projectile
+   helm-projectile
+   expand-region
+   helm-descbinds
+   helm-ag
+   helm-google
 
-		       go-mode
-		       go-eldoc
-		       company-go
-               go-projectile
-               gotest
+   go-mode
+   go-eldoc
+   company-go
+   go-projectile
+   gotest
 
-               cmake-ide
-               company-c-headers
+   cmake-ide
+   company-c-headers
 
-               nvm
-               js2-mode
-               js2-refactor
-               web-mode
-               company-tern
+   nvm
+   js2-mode
+   js2-refactor
+   web-mode
+   company-tern
 
-               smart-mode-line
-               beacon
-               ace-window
-               aggressive-indent
-               neotree))
+   smart-mode-line
+   beacon
+   ace-window
+   aggressive-indent
+   neotree))
 
 (my/load-config "ui-tweaks")
 (my/load-config "editing")
@@ -105,10 +104,10 @@
 (my/load-config "golang")
 (my/load-config "js")
 (my/load-config "org-mode")
-(if (equalp system-type 'gnu/linux)
-    (my/load-config "linux"))
+(when (equalp system-type 'gnu/linux)
+  (my/load-config "linux"))
 
 (my/load-config "custom-file")
 
 (provide 'init)
-;; init ends here
+;; init.el ends here
