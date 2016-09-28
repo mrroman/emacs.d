@@ -1,5 +1,12 @@
+;;; helm --- Enable helm -*- lexical-binding: t -*-
+;;;
+;;; Commentary:
+;;; Code:
 
+(require 'helm)
+(require 'helm-buffers)
 (require 'helm-config)
+(require 'helm-files)
 
 ;; Helm settings
 (setq helm-split-window-in-side-p           t
@@ -21,3 +28,4 @@
 ;; Helm mode
 (helm-mode t)
 
+;;; helm.el ends here

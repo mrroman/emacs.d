@@ -1,4 +1,12 @@
+;;; golang --- Enable golang -*- lexical-binding: t -*-
+;;;
+;;; Commentary:
+;;; Code:
+
 ;; from github.com/bbatsov prelude.go
+
+(require 'company)
+(require 'go-mode)
 
 (eval-after-load 'go-mode
   '(progn
@@ -32,10 +40,7 @@
        ;; CamelCase aware editing operations
        (subword-mode +1)
 
-       ;; Turn off smartparens strict mode
-       (smartparens-strict-mode 0))
+       (add-hook 'go-mode-hook (lambda ()
+                                 (run-hooks 'prelude-go-mode-hook))))))
 
-     (setq prelude-go-mode-hook 'prelude-go-mode-defaults)
-
-     (add-hook 'go-mode-hook (lambda ()
-                               (run-hooks 'prelude-go-mode-hook)))))
+;;; golang.el ends here

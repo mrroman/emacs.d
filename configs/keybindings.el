@@ -1,3 +1,8 @@
+;;; keybindings --- Set up custom keybindings -*- lexical-binding: t -*-
+;;;
+;;; Commentary:
+;;; Code:
+
 ;; Window navigation
 (global-set-key (kbd "C-x o") 'ace-window)
 
@@ -16,6 +21,7 @@
 
 (defadvice term-handle-exit
     (after term-kill-buffer-on-exit activate)
+  "Kill buffer and window on term exit."
   (kill-buffer-and-window))
 
 (defvar my/term-number 0)
@@ -25,7 +31,7 @@
 (global-set-key (kbd "C-c t") (lambda ()
                                 (interactive)
                                 (let* ((window (split-window-below -10))
-                                       (buf-name (format "ansi-term<%d>" (incf my/term-number)))
+                                       (buf-name (format "ansi-term<%d>" (setq my/term-number (+ my/term-number 1))))
                                        (buffer (term-ansi-make-term buf-name (getenv "SHELL"))))
                                   (progn
                                     (set-buffer buffer)
@@ -44,3 +50,5 @@
 
 (global-unset-key (kbd "C-<previous>"))
 (global-unset-key (kbd "C-<next>"))
+
+;;; keybindings.el ends here

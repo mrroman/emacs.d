@@ -1,4 +1,7 @@
-;; Editing tweaks
+;;; editing --- Editing tweaks -*- lexical-binding: t -*-
+;;;
+;;; Commentary:
+;;; Code:
 
 (delete-selection-mode t)
 (whole-line-or-region-mode)
@@ -30,9 +33,4 @@
 
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
-;; org mode
-
-(case system-type
-  (gnu/linux (setq org-default-notes-file "~/Dokumenty/organizer.org"))
-  (darwin (setq org-default-notes-file "~/Documents/organizer.org"))
-  (t (setq org-default-notes-file "~/organizer.org")))
+;;; editing.el ends here

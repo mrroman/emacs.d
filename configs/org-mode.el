@@ -1,4 +1,4 @@
-;;; projectile.el --- org-mode settings -*- lexical-binding: t -*-
+;;; org-mode --- org-mode settings -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -13,5 +13,14 @@
                                  (if (get-buffer notes-buffer-name)
                                      (kill-buffer notes-buffer-name)
                                    (find-file org-default-notes-file)))))
+
+(defun my/system-p (system)
+  "Check if Emacs is running on system SYSTEM."
+  (equal system-type system))
+
+(cond
+ ((my/system-p 'gnu/linux) (setq org-default-notes-file "~/Dokumenty/organizer.org"))
+ ((my/system-p 'darwin) (setq org-default-notes-file "~/Documents/organizer.org"))
+ (t (setq org-default-notes-file "~/organizer.org")))
 
 ;;; org-mode.el ends here

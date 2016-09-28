@@ -1,3 +1,8 @@
+;;; ui-tweaks --- Enable ui-tweaks -*- lexical-binding: t -*-
+;;;
+;;; Commentary:
+;;; Code:
+
 ;; UI tweaks
 
 (setq inhibit-startup-screen t)
@@ -31,3 +36,5 @@
 ;; translucency
 
 ;; (add-to-list 'default-frame-alist '(alpha . (100 . 75)))
+
+;;; ui-tweaks.el ends here

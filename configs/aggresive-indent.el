@@ -1,5 +1,12 @@
-;; enable aggresive indents in few modes
+;;; aggresive-indent --- Enable aggresive indents in few modes -*- lexical-binding: t -*-
+;;;
+;;; Commentary:
+;;; Code:
 
-(add-hook 'emacs-lisp-mode-hook #'aggresive-indent)
-(add-hook 'css-mode-hook #'aggresive-indent)
-(add-hook 'clojure-mode-hook #'aggresive-indent)
+(require 'aggressive-indent)
+
+(add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+(add-hook 'css-mode-hook #'aggressive-indent-mode)
+(add-hook 'clojure-mode-hook #'aggressive-indent-mode)
+
+;;; aggresive-indent.el ends here

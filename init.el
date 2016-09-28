@@ -1,12 +1,11 @@
-;;; init --- Configuration and packages setup
+;;; init --- Configuration and packages setup -*- lexical-binding: t -*-
 ;;;
 ;;; Commentary:
+;;; Code:
 
 ;; set up packages
 
 (require 'package)
-
-;;; Code:
 
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
@@ -104,10 +103,10 @@
 (my/load-config "golang")
 (my/load-config "js")
 (my/load-config "org-mode")
-(when (equalp system-type 'gnu/linux)
+(when (equal system-type 'gnu/linux)
   (my/load-config "linux"))
 
 (my/load-config "custom-file")
 
 (provide 'init)
-;; init.el ends here
+;;; init.el ends here

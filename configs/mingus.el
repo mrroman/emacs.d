@@ -1,3 +1,8 @@
+;;; mingus --- Enable mingus -*- lexical-binding: t -*-
+;;;
+;;; Commentary:
+;;; Code:
+
 (require 'mingus)
 
 (dolist (station '(("SomaFM - GrooveSalad" . "http://ice1.somafm.com/groovesalad-128-mp3")
@@ -7,7 +12,10 @@
   (add-to-list 'mingus-stream-alist station))
 
 (defun my/mingus-play-toggle ()
-  "Toggle playing MPD. If MPD was playing it pauses. If MPD was paused it plays. If MPD was stopeed it starts playing."
+  "Toggle playing MPD.
+If MPD was playing pause.
+If MPD was paused, play.
+If MPD was stopeed, start playing."
   (interactive)
   (progn
     (mingus)
@@ -19,3 +27,5 @@
 
 (global-set-key [f5] 'my/mingus-play-toggle)
 (global-set-key (kbd "<S-f5>") 'mingus)
+
+;;; mingus.el ends here

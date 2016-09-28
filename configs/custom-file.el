@@ -1,3 +1,8 @@
+;;; custom-file --- Enable custom-file -*- lexical-binding: t -*-
+;;;
+;;; Commentary:
+;;; Code:
+
 ;; Select other custom-file
 
 (setq custom-file (concat (file-name-as-directory user-emacs-directory) "custom.el"))
@@ -6,3 +11,5 @@
   (write-region ";; Customize file\n" nil custom-file))
 
 (load-file custom-file)
+
+;;; custom-file.el ends here

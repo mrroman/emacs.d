@@ -1,4 +1,11 @@
+;;; coding --- Set up coding -*- lexical-binding: t -*-
+;;;
+;;; Commentary:
+;;; Code:
+
 ;; Coding tweaks
+
+(require 'company)
 
 (global-company-mode t)
 (setq company-idle-delay 0.1)
@@ -35,3 +42,5 @@
 
 (setq-default compilation-scroll-output t)
 (add-hook 'compilation-filter-hook #'endless/colorize-compilation)
+
+;;; coding.el ends here
