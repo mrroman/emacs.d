@@ -1,4 +1,5 @@
 *~
+*.jar
 *.elc
 auto-save-list
 recentf

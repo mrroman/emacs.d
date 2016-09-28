@@ -81,7 +81,7 @@
    go-projectile
    gotest
 
-   cmake-ide
+;   cmake-ide
    company-c-headers
 
    nvm
