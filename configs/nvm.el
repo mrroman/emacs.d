@@ -8,7 +8,9 @@
 
 (defun my/setup-node-using-nvm ()
   "Set up correct node version using nvm."
-  (when (file-exists-p (concat (projectile-project-root) ".nvmrc"))
+  (when (and
+         (projectile-project-p)
+         (file-exists-p (concat (projectile-project-root) ".nvmrc")))
     (nvm-use-for (projectile-project-root))
     (setq exec-path (remove-if (lambda (x)
                                  (string-match-p "\\.nvm" x)) exec-path))
