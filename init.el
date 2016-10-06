@@ -1,112 +1,123 @@
-;;; init --- Configuration and packages setup -*- lexical-binding: t -*-
 ;;;
-;;; Commentary:
-;;; Code:
+;;; Healthy defaults :)
+;;;
 
-;; set up packages
+(setq inhibit-startup-screen t
+      initial-scratch-message nil
+
+      create-lockfiles nil
+      make-backup-files nil
+
+
+      column-number-mode t
+      scroll-error-top-bottom t
+      show-paren-delay 0.5
+      use-package-always-ensure t
+      sentence-end-double-space nil
+      help-window-select t
+      custom-file "~/.emacs.d/custom.el")
+
+(load-theme 'wombat)
+
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(setq-default indent-tabs-mode nil
+              tab-width 4
+              c-basic-offset 4)
+
+(electric-indent-mode t)
+(eldoc-mode)
+
+(delete-selection-mode t)
+
+(global-set-key (kbd "C-x C-j") 'dired-jump)
+
+;;;
+;;; Extensions
+;;;
 
 (require 'package)
 
 (add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
-
-;; load package archives if no packages installed
-
-(let ((elpa-dir (concat (file-name-as-directory user-emacs-directory) "elpa/")))
-  (when (not (file-exists-p elpa-dir))
-    (package-refresh-contents)))
+             '("melpa" . "https://melpa.org/packages/"))
 
 (package-initialize)
+(when (not package-archive-contents)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
-(require 'exec-path-from-shell)
-(when (functionp 'exec-path-from-shell-initialize)
-  (add-to-list 'exec-path-from-shell-variables "GOROOT")
-  (add-to-list 'exec-path-from-shell-variables "ANDROID_HOME")
-  (add-to-list 'exec-path-from-shell-variables "GOPATH")
-  (exec-path-from-shell-initialize))
+(require 'use-package)
 
-(defun my/install-package (pkg-name)
-  "Install package PKG-NAME unless it is not already installed."
-  (unless (package-installed-p pkg-name)
-    (package-install pkg-name)))
+;; Code completion
 
-(defvar my/configs-directory
-  (concat (file-name-as-directory user-emacs-directory) "configs/")
-  "Directory with configuration files of installed packages.")
+(use-package company
+  :init
+  (setq company-idle-delay 0.1)
+  :config
+  (global-company-mode))
 
-(defun my/load-config (name)
-  "Load configuration for package NAME from configuration directory."
-  (let ((file-with-path (concat my/configs-directory name ".el")))
-    (when (file-exists-p file-with-path)
-      (load-file file-with-path))))
+;; Lisp editing helpers
 
-(defun my/package-required (pkg-list)
-  "Install and configure all packages on PKG-LIST."
-  (dolist (pkg-name pkg-list)
-    (my/install-package pkg-name)
-    (my/load-config (symbol-name pkg-name))))
+(use-package paredit
+  :config
+  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+  (add-hook 'lisp-mode-hook #'paredit-mode))
 
-(my/package-required
- '(f
-   color-theme-wombat
-   company
-   helm
-   multiple-cursors
-   ace-jump-mode
-   whole-line-or-region
-   exec-path-from-shell
+(use-package ivy
+  :init
+  (setq ivy-use-virtual-buffers t)
+  :config
+  (ivy-mode 1))
 
-   cider
-   clj-refactor
-   clojure-mode-extra-font-locking
-   flycheck-clojure
+(use-package counsel
+  :bind (("M-x" . counsel-M-x)
+         ("M-y" . counsel-yank-pop)
+         ("C-x C-f" . counsel-find-file)
+         ("C-h b" . counsel-descbinds)))
 
-   flycheck-pos-tip
-   undo-tree
-   magit
+(use-package swiper
+  :bind (("C-s" . swiper)))
 
-   projectile
-   helm-projectile
-   expand-region
-   helm-descbinds
-   helm-ag
-   helm-google
+(use-package whole-line-or-region
+  :config
+  (whole-line-or-region-mode))
 
-   go-mode
-   go-eldoc
-   company-go
-   go-projectile
-   gotest
+(use-package smart-mode-line
+  :config
+  (setq sml/theme 'dark)
+  (setq sml/no-confirm-load-theme t)
+  (sml/setup))
 
-;   cmake-ide
-   company-c-headers
+(use-package ace-jump-mode
+  :bind (("C-." . ace-jump-mode)))
 
-   nvm
-   js2-mode
-   js2-refactor
-   web-mode
-   company-tern
+(use-package multiple-cursors
+  :bind (("C-M->" . mc/mark-next-like-this)
+         ("C-M-<" . mc/mark-previous-like-this)
+         ("C-c C-M->" . mc/skip-to-next-like-this)
+         ("C-c C-M-<" . mc/skip-to-previous-like-this)))
 
-   smart-mode-line
-   beacon
-   ace-window
-   aggressive-indent
-   neotree))
+(use-package magit
+  :bind (("C-x g" . magit-status))
+  :config
+  (setq magit-completing-read-function 'ivy-completing-read))
 
-(my/load-config "ui-tweaks")
-(my/load-config "editing")
-(my/load-config "coding")
-(my/load-config "keybindings")
+(use-package projectile
+  :config
+  (setq projectile-completion-system 'ivy)
+  (projectile-global-mode))
 
-(my/load-config "golang")
-(my/load-config "js")
-(my/load-config "org-mode")
-(when (equal system-type 'gnu/linux)
-  (my/load-config "linux"))
+(use-package js2-mode
+  :mode ("\\.js\\'" "\\.jsx\\'"))
 
-(my/load-config "custom-file")
-
-(provide 'init)
-;;; init.el ends here
+(use-package whitespace
+  :ensure nil
+  :config
+  (setq whitespace-line-column 80
+        whitespace-style '(face tabs empty trailing lines-tail))
+  (global-whitespace-mode)
+  (add-hook 'before-save-hook 'whitespace-cleanup))
