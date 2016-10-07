@@ -62,16 +62,17 @@
 ;;
 ;; Init
 
+(defun my/system-p (system)
+  "Check if Emacs is running on system SYSTEM."
+  (equal system-type system))
+
 (use-package exec-path-from-shell
+  :if (not (my/system-p 'windows-nt))
   :config
   (add-to-list 'exec-path-from-shell-variables "GOROOT")
   (add-to-list 'exec-path-from-shell-variables "ANDROID_HOME")
   (add-to-list 'exec-path-from-shell-variables "GOPATH")
   (exec-path-from-shell-initialize))
-
-(defun my/system-p (system)
-  "Check if Emacs is running on system SYSTEM."
-  (equal system-type system))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
