@@ -41,6 +41,8 @@
 
 (delete-selection-mode t)
 
+(message "Loading extensions...")
+
 ;;;
 ;;; Extensions
 ;;;
@@ -62,6 +64,8 @@
 ;;
 ;; Init
 
+(message "Loading extensions: Init")
+
 (defun my/system-p (system)
   "Check if Emacs is running on system SYSTEM."
   (equal system-type system))
@@ -77,6 +81,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Editing
+
+(message "Loading extensions: Editing")
 
 (use-package whole-line-or-region
   :config
@@ -111,6 +117,8 @@
 ;;
 ;; UI
 
+(message "Loading extensions: UI")
+
 (use-package smart-mode-line
   :config
   (setq sml/theme 'dark)
@@ -135,6 +143,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Terminal
+
+(message "Loading extensions: Terminal")
 
 (defadvice term-handle-exit
     (after term-kill-buffer-on-exit activate)
@@ -168,6 +178,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Coding
+
+(message "Loading extensions: Coding")
 
 (use-package company
   :init
@@ -205,6 +217,8 @@
 ;;
 ;; Ivy
 
+(message "Loading extensions: Ivy")
+
 (use-package ivy
   :init
   (setq ivy-use-virtual-buffers t)
@@ -224,6 +238,8 @@
 ;;
 ;; Projects
 
+(message "Loading extensions: Projects")
+
 (use-package magit
   :bind (("C-x g" . magit-status))
   :config
@@ -233,6 +249,8 @@
   :config
   (setq projectile-completion-system 'ivy)
   (projectile-mode))
+
+(use-package ag)
 
 (use-package dired-x
   :ensure nil
@@ -258,6 +276,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Javascript
+
+(message "Loading extensions: Javascript")
 
 (use-package js2-mode
   :mode ("\\.js\\'" "\\.jsx\\'"))
@@ -328,6 +348,8 @@
 ;;
 ;; Clojure
 
+(message "Loading extensions: Clojure")
+
 (use-package cider
   :bind ("TAB" . company-indent-or-complete-common)
   :config
@@ -350,6 +372,8 @@
 ;;
 ;; Lisp editing helpers
 
+(message "Loading extensions: Lisp")
+
 (use-package paredit
   :config
   (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
@@ -361,6 +385,8 @@
 ;;
 ;; C/C++
 
+(message "Loading extensions: C/C++")
+
 (use-package company-c-headers
   :config
   (add-to-list 'company-backends 'company-c-headers))
@@ -369,18 +395,20 @@
 ;;
 ;; Go
 
+(message "Loading extensions: Go")
+
 (use-package go-mode
   :bind (:map go-mode-map
-         ("C-c a" . go-test-current-project)
-         ("C-c m" . go-test-current-file)
-         ("C-c ." . go-test-current-test)
-         ("C-c b" . go-run)
-         ("C-h f" . godoc-at-point)
-         ("M-." . godef-jump))
+              ("C-c a" . go-test-current-project)
+              ("C-c m" . go-test-current-file)
+              ("C-c ." . go-test-current-test)
+              ("C-c b" . go-run)
+              ("C-h f" . godoc-at-point)
+              ("M-." . godef-jump))
   :config
   (let ((goimports (executable-find "goimports")))
-         (when goimports
-           (setq gofmt-command goimports)))
+    (when goimports
+      (setq gofmt-command goimports)))
   (add-hook 'go-mode-hook (lambda ()
                             (go-eldoc-setup)
                             (subword-mode +1)
@@ -394,6 +422,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Org Mode
+
+(message "Loading extensions: Org-mode")
 
 (use-package org
   :ensure nil
