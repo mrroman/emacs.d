@@ -113,6 +113,9 @@
 (use-package expand-region
   :bind ("M-SPC" . er/expand-region))
 
+(when (my/system-p 'darwin)
+  (setq ns-right-alternate-modifier nil))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; UI
