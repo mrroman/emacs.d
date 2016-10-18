@@ -430,19 +430,16 @@
 
 (use-package org
   :ensure nil
-  :bind ("C-c c" . org-capture)
+  :bind (("C-c c" . org-capture)
+         ("C-c a" . org-agenda))
   :config
-  (cond
-   ((my/system-p 'gnu/linux) (setq org-default-notes-file (expand-file-name "~/Dokumenty/organizer.org")))
-   ((my/system-p 'darwin) (setq org-default-notes-file "~/Documents/organizer.org"))
-   (t (setq org-default-notes-file "~/organizer.org")))
+  (setq org-default-notes-file (concat org-directory "/notes.org"))
+  (setq org-agenda-files (list org-directory))
+  (setq org-refile-targets
+        '((nil :maxlevel . 3)
+          (org-agenda-files :maxlevel . 3))))
 
-  (global-set-key (kbd "<f2>") (lambda ()
-                                 (interactive)
-                                 (let ((notes-buffer-name (file-name-nondirectory org-default-notes-file)))
-                                   (if (get-buffer notes-buffer-name)
-                                       (kill-buffer notes-buffer-name)
-                                     (find-file org-default-notes-file))))))
+(use-package org-bullets)
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars)
