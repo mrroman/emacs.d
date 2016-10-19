@@ -441,6 +441,17 @@
 
 (use-package org-bullets)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; MPD client
+
+(message "Configure MPD client")
+
+(use-package mpc
+  :ensure nil
+  :bind (:map mpc-mode-map
+              ("M-RET" . mpc-play-at-point)))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars)
 ;; flycheck-disabled-checkers: (emacs-lisp-checkdoc)
