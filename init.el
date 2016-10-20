@@ -40,6 +40,7 @@
 (show-paren-mode)
 
 (delete-selection-mode t)
+(windmove-default-keybindings)
 
 (message "Loading extensions...")
 
