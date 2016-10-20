@@ -440,7 +440,9 @@
         '((nil :maxlevel . 3)
           (org-agenda-files :maxlevel . 3))))
 
-(use-package org-bullets)
+(use-package org-bullets
+  :config
+  (org-bullets-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
