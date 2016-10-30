@@ -442,7 +442,8 @@
 
 (use-package org-bullets
   :config
-  (org-bullets-mode))
+  (org-bullets-mode)
+  (add-hook 'org-mode-hook #'org-bullets-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
