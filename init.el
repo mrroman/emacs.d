@@ -425,6 +425,23 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
+;; CommonLisp
+
+(message "Loading extensions: CommonLisp")
+
+(use-package slime
+  :config
+  (setq inferior-lisp-program "sbcl")
+  (add-to-list 'slime-contribs 'slime-fancy)
+  (slime-setup))
+
+(use-package slime-company
+  :init
+  (add-to-list 'slime-contribs 'slime-company)
+  (slime-setup))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;; Org Mode
 
 (message "Loading extensions: Org-mode")
