@@ -462,6 +462,13 @@
   (org-bullets-mode)
   (add-hook 'org-mode-hook #'org-bullets-mode))
 
+(setq calendar-week-start-day 1
+      calendar-day-name-array ["Niedziela" "Poniedziałek" "Wtorek" "Środa"
+                               "Czwartek" "Piątek" "Sobota"]
+      calendar-month-name-array ["Styczeń" "Luty" "Marzec" "Kwiecień" "Maj"
+                                 "Czerwiec" "Lipiec" "Sierpień" "Wrzesień"
+                                 "Październik" "Listopad" "Grudzień"])
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; MPD client
