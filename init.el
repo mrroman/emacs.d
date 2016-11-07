@@ -201,9 +201,7 @@
 
 (use-package yasnippet)
 
-(use-package aggressive-indent
-  :config
-  (global-aggressive-indent-mode 1))
+(use-package aggressive-indent)
 
 ;;; Colorize compilation buffer
 
@@ -276,6 +274,15 @@
 
   (global-set-key (kbd "<C-tab>") 'my/neotree-toggle))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Javascript
+
+(message "Loading extensions: Web")
+
+(use-package web-mode
+  :mode (("\\.html?\\'" . web-mode)
+         ("\\.jsp?\\'" . web-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -384,6 +391,11 @@
   (add-hook 'lisp-mode-hook #'paredit-mode)
   (add-hook 'clojure-mode-hook #'paredit-mode)
   (add-hook 'clojurescript-mode-hook #'paredit-mode))
+
+(add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+(add-hook 'lisp-mode-hook #'aggressive-indent-mode)
+(add-hook 'clojure-mode-hook #'aggressive-indent-mode)
+(add-hook 'clojurescript-mode-hook #'aggressive-indent-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
