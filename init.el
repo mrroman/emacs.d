@@ -419,16 +419,23 @@
               ("C-c m" . go-test-current-file)
               ("C-c ." . go-test-current-test)
               ("C-c b" . go-run)
-              ("C-h f" . godoc-at-point)
+              ("C-c d" . godoc-at-point)
               ("M-." . godef-jump))
   :config
-  (let ((goimports (executable-find "goimports")))
-    (when goimports
-      (setq gofmt-command goimports)))
-  (add-hook 'go-mode-hook (lambda ()
-                            (go-eldoc-setup)
-                            (subword-mode +1)
-                            (add-hook 'before-save-hook 'gofmt-before-save nil t))))
+  (progn
+    (use-package go-eldoc)
+    (use-package go-guru)
+    (use-package go-rename)
+    (let ((goimports (executable-find "goimports")))
+      (when goimports
+        (setq gofmt-command goimports)))
+    (add-hook 'go-mode-hook (lambda ()
+                              (go-eldoc-setup)
+                              (subword-mode +1)
+                              (setq tab-width 8
+                                    indent-tabs-mode 1)
+                              (setq-local whitespace-style '(face empty trailing lines-tail))
+                              (add-hook 'before-save-hook 'gofmt-before-save nil t)))))
 
 (use-package company-go
   :config
