@@ -470,11 +470,14 @@
   :bind (("C-c c" . org-capture)
          ("C-c a" . org-agenda))
   :config
-  (setq org-default-notes-file (concat org-directory "/notes.org"))
-  (setq org-agenda-files (list org-directory (expand-file-name "~/Dropbox/Notatki")))
-  (setq org-refile-targets
-        '((nil :maxlevel . 3)
-          (org-agenda-files :maxlevel . 3))))
+  (progn
+    (when (file-exists-p "~/Dropbox/Notatki")
+      (setq org-directory "~/Dropbox/Notatki"))
+    (setq org-default-notes-file (concat org-directory "/notes.org"))
+    (setq org-agenda-files (list org-directory))
+    (setq org-refile-targets
+          '((nil :maxlevel . 3)
+            (org-agenda-files :maxlevel . 3)))))
 
 (use-package org-bullets
   :config
