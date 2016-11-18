@@ -450,7 +450,7 @@
 
 (use-package slime
   :config
-  (setq inferior-lisp-program "sbcl")
+  (setq inferior-lisp-program "sbcl --noinform --no-linedit")
   (add-to-list 'slime-contribs 'slime-fancy)
   (slime-setup))
 
