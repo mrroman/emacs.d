@@ -329,10 +329,10 @@
 
 (defun my/custom-js-indent ()
   "Set up custom indent for Javascript package.json."
-  (let* ((buffer-file-path (buffer-file-name (current-buffer)))
-         (fname (file-name-nondirectory buffer-file-path)))
-    (when (string= fname "package.json")
-      (setq-local js-indent-level 2))))
+  (when-let ((buffer-file-path (buffer-file-name (current-buffer))))
+    (let ((fname (file-name-nondirectory buffer-file-path)))
+      (when (string= fname "package.json")
+        (setq-local js-indent-level 2)))))
 
 (defun my/npm-dep-bin-path (name)
   "Return path to npm deps NAME binary."
@@ -493,11 +493,17 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Org Mode
+;; YAML Mode
 
 (message "Loading extensions: YAML")
 
 (use-package yaml-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; RestClient
+
+(use-package restclient)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
