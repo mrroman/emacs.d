@@ -199,7 +199,9 @@
   :config
   (flycheck-pos-tip-mode))
 
-(use-package yasnippet)
+(use-package yasnippet
+  :config
+  (yas-global-mode 1))
 
 (use-package aggressive-indent)
 
@@ -354,6 +356,15 @@
 
 (add-hook 'js-mode-hook 'my/custom-js-indent)
 (add-hook 'js-mode-hook 'my/js-linters-setup)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Java
+
+(add-hook 'java-mode-hook (lambda ()
+                            (semantic-mode)
+                            (set (make-local-variable 'company-backends)
+                                 '((company-semantic :with company-yasnippet)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
