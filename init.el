@@ -201,7 +201,7 @@
 
 (use-package yasnippet
   :config
-  (yas-global-mode 1))
+  (yas-reload-all))
 
 (use-package aggressive-indent)
 
@@ -361,10 +361,14 @@
 ;;
 ;; Java
 
-(add-hook 'java-mode-hook (lambda ()
-                            (semantic-mode)
-                            (set (make-local-variable 'company-backends)
-                                 '((company-semantic :with company-yasnippet)))))
+(defun my/java-mode-hook ()
+  (semantic-mode)
+  (yas-minor-mode)
+  (set (make-local-variable 'company-backends)
+       '((company-semantic company-dabbrev company-yasnippet)))
+  (setq-local company-dabbrev-downcase nil))
+
+(add-hook 'java-mode-hook #'my/java-mode-hook)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
