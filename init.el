@@ -140,7 +140,9 @@
     (message "Font '%s' not found" name)))
 
 (cond
- ((my/system-p 'darwin) (my/set-font "Iosevka Term 15"))
+ ((my/system-p 'darwin) (progn
+                          (my/set-font "Iosevka Term 15")
+                          (set-frame-size (selected-frame) 170 42)))
  ((my/system-p 'windows-nt) (progn
                               (my/set-font "Iosevka Term 11")
                               (set-frame-size (selected-frame) 140 40)))
