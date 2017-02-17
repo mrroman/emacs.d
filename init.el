@@ -316,13 +316,14 @@
            (file-exists-p (concat (projectile-project-root) ".nvmrc")))
       (nvm-use-for (projectile-project-root))
 
-      (setq exec-path (delq nil
-                            (mapcar
-                             (lambda (x) (string-match-p "\\.nvm" x))
-                             exec-path)))
+      (delq (car (delq nil
+                       (mapcar
+                        (lambda (x) (when (string-match-p "\\.nvm" x) x))
+                        exec-path)))
+            exec-path)
 
       (add-to-list 'exec-path
-                   (concat (file-name-as-directory (second nvm-current-version))
+                   (concat (file-name-as-directory (cadr nvm-current-version))
                            "bin"))))
 
   (add-hook 'projectile-after-switch-project-hook #'my/setup-node-using-nvm))
