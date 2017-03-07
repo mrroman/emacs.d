@@ -24,9 +24,10 @@
 
 (load-theme 'wombat)
 
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
+(when window-system
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1))
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -129,9 +130,10 @@
   (setq sml/no-confirm-load-theme t)
   (sml/setup))
 
-(use-package beacon
-  :config
-  (beacon-mode t))
+(when window-system
+  (use-package beacon
+    :config
+    (beacon-mode t)))
 
 (defun my/set-font (name)
   "Try to set font for frame."
@@ -139,14 +141,15 @@
       (set-frame-font name)
     (message "Font '%s' not found" name)))
 
-(cond
- ((my/system-p 'darwin) (progn
-                          (my/set-font "Iosevka Term 15")
-                          (set-frame-size (selected-frame) 170 42)))
- ((my/system-p 'windows-nt) (progn
-                              (my/set-font "Iosevka Term 11")
-                              (set-frame-size (selected-frame) 140 40)))
- ((my/system-p 'gnu/linux) (my/set-font "Iosevka Term 13")))
+(when window-system
+  (cond
+   ((my/system-p 'darwin) (progn
+                            (my/set-font "Iosevka Term 15")
+                            (set-frame-size (selected-frame) 170 42)))
+   ((my/system-p 'windows-nt) (progn
+                                (my/set-font "Iosevka Term 11")
+                                (set-frame-size (selected-frame) 140 40)))
+   ((my/system-p 'gnu/linux) (my/set-font "Iosevka Term 13"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -395,11 +398,7 @@
     (cljr-add-keybindings-with-prefix "M-RET"))
   (add-hook 'clojure-mode-hook #'my/clj-refactor-init))
 
-(use-package flycheck-clojure
-  :config
-  (eval-after-load 'flycheck '(flycheck-clojure-setup)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Lisp editing helpers
 
