@@ -43,6 +43,8 @@
 (delete-selection-mode t)
 (windmove-default-keybindings)
 
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
 (message "Loading extensions...")
 
 ;;;
@@ -397,6 +399,10 @@
     (clj-refactor-mode 1)
     (cljr-add-keybindings-with-prefix "M-RET"))
   (add-hook 'clojure-mode-hook #'my/clj-refactor-init))
+
+(use-package flycheck-joker
+  :config
+  (require 'flycheck-joker))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
