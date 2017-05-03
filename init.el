@@ -263,6 +263,10 @@
   (setq projectile-completion-system 'ivy)
   (projectile-mode))
 
+(use-package counsel-projectile
+  :config
+  (counsel-projectile-on))
+
 (use-package ag)
 
 (use-package dired-x
