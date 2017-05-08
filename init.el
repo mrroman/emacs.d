@@ -205,6 +205,13 @@
   :config
   (global-company-mode))
 
+(use-package pos-tip)
+
+(use-package company-quickhelp
+  :if window-system
+  :config
+  (company-quickhelp-mode 1))
+
 (use-package flycheck
   :init
   (global-flycheck-mode))
