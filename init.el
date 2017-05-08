@@ -120,6 +120,11 @@
 (when (my/system-p 'darwin)
   (setq ns-right-alternate-modifier nil))
 
+(use-package which-key
+  :init
+  (which-key-setup-minibuffer)
+  (which-key-mode))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; UI
