@@ -421,6 +421,13 @@
   (add-hook 'clojure-mode-hook #'paredit-mode)
   (add-hook 'clojurescript-mode-hook #'paredit-mode))
 
+(use-package rainbow-delimiters
+  :config
+  (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'clojurescript-mode-hook #'rainbow-delimiters-mode))
+
 (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 (add-hook 'lisp-mode-hook #'aggressive-indent-mode)
 (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
