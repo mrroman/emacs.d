@@ -22,8 +22,6 @@
       scroll-conservatively 100000
       scroll-preserve-screen-position 1)
 
-(load-theme 'wombat)
-
 (when window-system
   (menu-bar-mode -1)
   (tool-bar-mode -1)
@@ -131,11 +129,14 @@
 
 (message "Loading extensions: UI")
 
-(use-package smart-mode-line
+(use-package powerline
+  :ensure t)
+
+(use-package moe-theme
+  :ensure t
   :config
-  (setq sml/theme 'dark)
-  (setq sml/no-confirm-load-theme t)
-  (sml/setup))
+  (moe-light)
+  (powerline-moe-theme))
 
 (when window-system
   (use-package beacon
