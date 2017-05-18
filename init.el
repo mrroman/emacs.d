@@ -389,6 +389,34 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
+;; Python
+
+(message "Loading extensions: Python")
+
+(use-package anaconda-mode
+  :config
+  (add-hook 'python-mode-hook (lambda ()
+                                (anaconda-mode 1)
+                                (anaconda-eldoc-mode 1))))
+
+(use-package company-anaconda
+  :config
+  (add-hook 'python-mode-hook (lambda ()
+                                (add-to-list 'company-backends 'company-anaconda))))
+
+(use-package pyenv-mode
+  :config
+  (defun my/projectile-pyenv-mode-set ()
+    "Set pyenv version matching project name."
+    (let ((project-dir (locate-dominating-file "." ".python-version")))
+      (if project-dir
+          (pyenv-mode-set project-dir)
+        (pyenv-mode-unset))))
+
+  (add-hook 'projectile-switch-project-hook 'my/projectile-pyenv-mode-set))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;; Java
 
 (defun my/java-mode-hook ()
