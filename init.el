@@ -53,6 +53,8 @@
 
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives
+             '("org" . "http://orgmode.org/elpa/"))
 
 (package-initialize)
 (when (not package-archive-contents)
@@ -518,7 +520,8 @@
 (message "Loading extensions: Org-mode")
 
 (use-package org
-  :ensure nil
+  :ensure org
+  :pin org
   :bind (("C-c c" . org-capture)
          ("C-c a" . org-agenda))
   :config
@@ -542,6 +545,10 @@
       calendar-month-name-array ["Styczeń" "Luty" "Marzec" "Kwiecień" "Maj"
                                  "Czerwiec" "Lipiec" "Sierpień" "Wrzesień"
                                  "Październik" "Listopad" "Grudzień"])
+
+(use-package ox-reveal
+  :config
+  (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
