@@ -248,10 +248,11 @@
 (message "Loading extensions: Ivy")
 
 (use-package ivy
-  :init
-  (setq ivy-use-virtual-buffers t)
   :config
+  (setq ivy-use-virtual-buffers t)
   (ivy-mode 1))
+
+(use-package ivy-hydra)
 
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
