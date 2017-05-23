@@ -125,6 +125,10 @@
   (which-key-setup-minibuffer)
   (which-key-mode))
 
+(use-package winum
+  :init
+  (winum-mode))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; UI
@@ -414,6 +418,12 @@
         (pyenv-mode-unset))))
 
   (add-hook 'projectile-switch-project-hook 'my/projectile-pyenv-mode-set))
+
+(use-package nose
+  :bind (:map python-mode-map
+              ("C-c t a" . nosetests-all)
+              ("C-c t m" . nosetests-module)
+              ("C-c t t" . nosetests-again)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
