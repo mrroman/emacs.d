@@ -228,8 +228,10 @@
   (flycheck-pos-tip-mode))
 
 (use-package yasnippet
+  :bind (("C-c y" . company-yasnippet))
   :config
-  (yas-reload-all))
+  (yas-reload-all)
+  (yas-global-mode 1))
 
 (use-package aggressive-indent)
 
