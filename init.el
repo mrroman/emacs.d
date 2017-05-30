@@ -144,6 +144,11 @@
   (moe-light)
   (powerline-moe-theme))
 
+(use-package spaceline
+  :config
+  (require 'spaceline-config)
+  (spaceline-emacs-theme))
+
 (when window-system
   (use-package beacon
     :config
@@ -447,7 +452,9 @@
 (message "Loading extensions: Clojure")
 
 (use-package cider
-  :bind ("TAB" . company-indent-or-complete-common)
+  :bind (("TAB" . company-indent-or-complete-common)
+         :map clojure-mode-map
+         ("C-c C-j" . imenu))
   :config
   (setq cider-repl-display-help-banner nil)
   (add-hook 'clojure-mode-hook (lambda ()
