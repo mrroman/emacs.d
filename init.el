@@ -135,19 +135,22 @@
 
 (message "Loading extensions: UI")
 
-(use-package powerline
-  :ensure t)
-
 (use-package moe-theme
   :ensure t
   :config
   (moe-light)
   (powerline-moe-theme))
 
-(use-package spaceline
+(use-package telephone-line
+  :if window-system
   :config
-  (require 'spaceline-config)
-  (spaceline-emacs-theme))
+  (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
+        telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
+        telephone-line-primary-right-separator 'telephone-line-cubed-right
+        telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-right)
+  (setq telephone-line-height 24
+        telephone-line-evil-use-short-tag t)
+  (telephone-line-mode t))
 
 (when window-system
   (use-package beacon
