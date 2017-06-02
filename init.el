@@ -606,6 +606,19 @@
   :config
   (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/"))
 
+(require 'ob-java)
+(require 'ob-python)
+(require 'ob-clojure)
+(require 'ob-shell)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (python . t)
+   (clojure . t)
+   (java . t)
+   (shell . t)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; YAML Mode
