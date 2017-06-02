@@ -135,11 +135,16 @@
 
 (message "Loading extensions: UI")
 
-(use-package moe-theme
+;; (use-package moe-theme
+;;   :ensure t
+;;   :config
+;;   (moe-light)
+;;   (powerline-moe-theme))
+
+(use-package kaolin-theme
   :ensure t
   :config
-  (moe-light)
-  (powerline-moe-theme))
+  (load-theme 'kaolin t))
 
 (use-package telephone-line
   :if window-system
