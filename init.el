@@ -619,6 +619,8 @@
    (java . t)
    (shell . t)))
 
+(setq-default major-mode 'org-mode)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; YAML Mode
