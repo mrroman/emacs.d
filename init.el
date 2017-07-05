@@ -54,6 +54,8 @@
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/"))
+(add-to-list 'package-archives
              '("org" . "http://orgmode.org/elpa/"))
 
 (package-initialize)
@@ -129,17 +131,13 @@
   :init
   (winum-mode))
 
+(use-package smex)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; UI
 
 (message "Loading extensions: UI")
-
-;; (use-package moe-theme
-;;   :ensure t
-;;   :config
-;;   (moe-light)
-;;   (powerline-moe-theme))
 
 (use-package kaolin-theme
   :ensure t
@@ -280,7 +278,12 @@
          ("C-h b" . counsel-descbinds)))
 
 (use-package swiper
-  :bind (("C-s" . swiper)))
+  :bind (("C-s" . swiper))
+  :config
+  (define-key swiper-map (kbd "C-.")
+    (lambda ()
+      (interactive)
+      (insert (format "\\<%s\\>" (with-ivy-window (thing-at-point 'symbol)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -405,6 +408,16 @@
 
 (add-hook 'js-mode-hook 'my/custom-js-indent)
 (add-hook 'js-mode-hook 'my/js-linters-setup)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Java
+
+(use-package meghanada
+  :config
+  (add-hook 'java-mode-hook
+            (lambda ()
+              (meghanada-mode t))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -551,6 +564,19 @@
   :config
   (add-hook 'go-mode-hook (lambda ()
                             (set (make-local-variable 'company-backends) '(company-go)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Scala
+
+(message "Loading extensions: Scala")
+
+(use-package ensime
+  :ensure t
+  :pin melpa)
+
+(setq ensime-startup-notification nil
+      ensime-startup-snapshot-notification nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
