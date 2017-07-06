@@ -15,6 +15,7 @@
       show-paren-delay 0.5
 
       sentence-end-double-space nil
+      dired-dwim-target t
       help-window-select t
       custom-file (expand-file-name "~/.emacs.d/custom.el"))
 
