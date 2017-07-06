@@ -319,21 +319,30 @@
   :ensure nil
   :bind ("C-x C-j" . dired-jump))
 
-(use-package neotree
-  :config
-  (defun my/neotree-toggle ()
-    "Toggle neotree window.  If buffer is a project buffer, open neotree based on projectile directory."
-    (interactive)
-    (if (neo-global--window-exists-p)
-        (neotree-hide)
-      (progn
-        (if (projectile-project-p)
-            (progn
-              (neotree-find)
-              (neotree-dir (projectile-project-root)))
-          (neotree-show)))))
+;; (use-package neotree
+;;   :config
+;;   (defun my/neotree-toggle ()
+;;     "Toggle neotree window.  If buffer is a project buffer, open neotree based on projectile directory."
+;;     (interactive)
+;;     (if (neo-global--window-exists-p)
+;;         (neotree-hide)
+;;       (progn
+;;         (if (projectile-project-p)
+;;             (progn
+;;               (neotree-find)
+;;               (neotree-dir (projectile-project-root)))
+;;           (neotree-show)))))
 
-  (global-set-key (kbd "<C-tab>") 'my/neotree-toggle))
+;;   (global-set-key (kbd "<C-tab>") 'my/neotree-toggle))
+
+(use-package ztree
+  :bind (("C-x C-d" . ztree-dir)))
+
+(global-set-key (kbd "<C-tab>") (lambda ()
+                                  (interactive)
+                                  (if (projectile-project-p)
+                                      (ztree-dir (projectile-project-root))
+                                    (ztree-dir default-directory))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
