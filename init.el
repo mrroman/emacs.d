@@ -92,6 +92,7 @@
 (message "Loading extensions: Editing")
 
 (use-package whole-line-or-region
+  :diminish whole-line-or-region-mode
   :config
   (whole-line-or-region-mode))
 
@@ -106,6 +107,7 @@
 
 (use-package whitespace
   :ensure nil
+  :diminish global-whitespace-mode
   :config
   (setq whitespace-line-column 80
         whitespace-style '(face tabs empty trailing lines-tail))
@@ -113,6 +115,7 @@
   (add-hook 'before-save-hook 'whitespace-cleanup))
 
 (use-package undo-tree
+  :diminish undo-tree-mode
   :bind ("C-x u" . undo-tree-mode)
   :init
   (global-undo-tree-mode))
@@ -124,6 +127,7 @@
   (setq ns-right-alternate-modifier nil))
 
 (use-package which-key
+  :diminish which-key-mode
   :init
   (which-key-setup-minibuffer)
   (which-key-mode))
@@ -158,6 +162,7 @@
 
 (when window-system
   (use-package beacon
+    :diminish beacon-mode
     :config
     (beacon-mode t)))
 
@@ -219,6 +224,7 @@
 (message "Loading extensions: Coding")
 
 (use-package company
+  :diminish company-mode
   :init
   (setq company-idle-delay 0.1)
   :config
@@ -245,7 +251,8 @@
   (yas-reload-all)
   (yas-global-mode 1))
 
-(use-package aggressive-indent)
+(use-package aggressive-indent
+  :diminish aggressive-indent-mode)
 
 ;;; Colorize compilation buffer
 
