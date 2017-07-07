@@ -117,7 +117,7 @@
 (use-package undo-tree
   :diminish undo-tree-mode
   :bind ("C-x u" . undo-tree-mode)
-  :init
+  :config
   (global-undo-tree-mode))
 
 (use-package expand-region
@@ -128,12 +128,12 @@
 
 (use-package which-key
   :diminish which-key-mode
-  :init
+  :config
   (which-key-setup-minibuffer)
   (which-key-mode))
 
 (use-package winum
-  :init
+  :config
   (winum-mode))
 
 (use-package smex)
@@ -225,9 +225,8 @@
 
 (use-package company
   :diminish company-mode
-  :init
-  (setq company-idle-delay 0.1)
   :config
+  (setq company-idle-delay 0.1)
   (global-company-mode))
 
 (use-package pos-tip)
@@ -238,7 +237,7 @@
   (company-quickhelp-mode 1))
 
 (use-package flycheck
-  :init
+  :config
   (global-flycheck-mode))
 
 (use-package flycheck-pos-tip
@@ -430,6 +429,7 @@
 ;; Java
 
 (use-package meghanada
+  :mode ("\\.java$")
   :config
   (add-hook 'java-mode-hook
             (lambda ()
@@ -442,12 +442,14 @@
 (message "Loading extensions: Python")
 
 (use-package anaconda-mode
+  :mode ("\\.py$")
   :config
   (add-hook 'python-mode-hook (lambda ()
                                 (anaconda-mode 1)
                                 (anaconda-eldoc-mode 1))))
 
 (use-package company-anaconda
+  :mode ("\\.py$")
   :config
   (add-hook 'python-mode-hook (lambda ()
                                 (add-to-list 'company-backends 'company-anaconda))))
@@ -464,6 +466,7 @@
   (add-hook 'projectile-switch-project-hook 'my/projectile-pyenv-mode-set))
 
 (use-package nose
+  :mode ("\\.py$")
   :bind (:map python-mode-map
               ("C-c t a" . nosetests-all)
               ("C-c t m" . nosetests-module)
@@ -683,7 +686,8 @@
 ;;
 ;; RestClient
 
-(use-package restclient)
+(use-package restclient
+  :commands (restclient-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
