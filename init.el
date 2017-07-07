@@ -248,7 +248,6 @@
 (use-package yasnippet
   :bind (("C-c y" . company-yasnippet))
   :config
-  (yas-reload-all)
   (yas-global-mode 1))
 
 (use-package aggressive-indent
@@ -311,7 +310,7 @@
 
 (use-package counsel-projectile
   :config
-  (counsel-projectile-on))
+  (counsel-projectile-toggle 1))
 
 (use-package ag)
 
@@ -476,7 +475,6 @@
 
 (defun my/java-mode-hook ()
   (semantic-mode)
-  (yas-minor-mode)
   (set (make-local-variable 'company-backends)
        '((company-semantic company-dabbrev company-yasnippet)))
   (setq-local company-dabbrev-downcase nil))
@@ -516,18 +514,20 @@
 (message "Loading extensions: Lisp")
 
 (use-package paredit
-  :config
-  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
-  (add-hook 'lisp-mode-hook #'paredit-mode)
-  (add-hook 'clojure-mode-hook #'paredit-mode)
-  (add-hook 'clojurescript-mode-hook #'paredit-mode))
+  :commands (paredit-mode))
 
 (use-package rainbow-delimiters
-  :config
-  (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'clojurescript-mode-hook #'rainbow-delimiters-mode))
+  :commands (rainbow-delimiters-mode))
+
+(add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+(add-hook 'lisp-mode-hook #'paredit-mode)
+(add-hook 'clojure-mode-hook #'paredit-mode)
+(add-hook 'clojurescript-mode-hook #'paredit-mode)
+
+(add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
+(add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
+(add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
+(add-hook 'clojurescript-mode-hook #'rainbow-delimiters-mode)
 
 (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 (add-hook 'lisp-mode-hook #'aggressive-indent-mode)
@@ -551,26 +551,31 @@
 (message "Loading extensions: Go")
 
 (use-package go-mode
+  :mode ("\\.go$" . go-mode)
   :bind (:map go-mode-map
               ("C-c d" . godoc-at-point)
               ("M-." . godef-jump))
   :config
-  (progn
-    (use-package go-eldoc)
-    (use-package go-guru)
-    (use-package go-rename)
-    (let ((goimports (executable-find "goimports")))
-      (when goimports
-        (setq gofmt-command goimports)))
-    (add-hook 'go-mode-hook (lambda ()
-                              (go-eldoc-setup)
-                              (subword-mode +1)
-                              (setq-local tab-width 8
-                                          indent-tabs-mode 1)
-                              (setq-local whitespace-style '(face empty trailing lines-tail))
-                              (add-hook 'before-save-hook 'gofmt-before-save nil t)))))
+  (let ((goimports (executable-find "goimports")))
+    (when goimports
+      (setq gofmt-command goimports)))
+  (add-hook 'go-mode-hook (lambda ()
+                            (go-eldoc-setup)
+                            (subword-mode +1)
+                            (setq-local tab-width 8)
+                            (setq-local indent-tabs-mode 1)
+                            (setq-local whitespace-style '(face empty trailing lines-tail))
+                            (add-hook 'before-save-hook 'gofmt-before-save nil t))))
+
+(use-package go-eldoc
+  :mode ("\\.go$" . go-mode))
+(use-package go-guru
+  :mode ("\\.go$" . go-mode))
+(use-package go-rename
+  :mode ("\\.go$" . go-mode))
 
 (use-package gotest
+  :mode ("\\.go$" . go-mode)
   :bind (:map go-mode-map
               ("C-c a" . go-test-current-project)
               ("C-c m" . go-test-current-file)
@@ -578,6 +583,7 @@
               ("C-c b" . go-run)))
 
 (use-package company-go
+  :mode ("\\.go$" . go-mode)
   :config
   (add-hook 'go-mode-hook (lambda ()
                             (set (make-local-variable 'company-backends) '(company-go)))))
@@ -590,10 +596,11 @@
 
 (use-package ensime
   :ensure t
-  :pin melpa)
-
-(setq ensime-startup-notification nil
-      ensime-startup-snapshot-notification nil)
+  :commands (ensime)
+  :pin melpa
+  :config
+  (setq ensime-startup-notification nil
+        ensime-startup-snapshot-notification nil))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
