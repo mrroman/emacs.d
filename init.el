@@ -612,13 +612,17 @@
 (message "Loading extensions: CommonLisp")
 
 (use-package slime
-  :commands (slime)
   :config
-  (if (executable-find "ros")
-      (load (expand-file-name "~/.roswell/helper.el"))
-    (setq inferior-lisp-program "sbcl --noinform --no-linedit"))
-  (use-package slime-company)
-  (add-to-list 'slime-contribs 'slime-fancy)
+  (progn
+    (if (executable-find "ros")
+        (load (expand-file-name "~/.roswell/helper.el"))
+      (setq inferior-lisp-program "sbcl --noinform --no-linedit"))
+    (add-to-list 'slime-contribs 'slime-fancy)
+    (slime-setup)))
+
+(use-package slime-company
+  :ensure t
+  :init
   (add-to-list 'slime-contribs 'slime-company)
   (slime-setup))
 
