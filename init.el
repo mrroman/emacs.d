@@ -666,6 +666,7 @@
 (require 'ob-java)
 (require 'ob-python)
 (require 'ob-clojure)
+(require 'ob-js)
 (require 'ob-shell)
 
 (org-babel-do-load-languages
@@ -674,9 +675,13 @@
    (python . t)
    (clojure . t)
    (java . t)
+   (js . t)
    (shell . t)))
 
 (setq-default major-mode 'org-mode)
+
+(setq org-latex-listings 'minted)
+(add-to-list 'org-latex-packages-alist '("" "minted"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
