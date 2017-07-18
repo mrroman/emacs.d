@@ -510,6 +510,9 @@
   :config
   (require 'flycheck-joker))
 
+(setq cider-refresh-before-fn "dev/stop"
+      cider-refresh-after-fn "dev/start")
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Lisp editing helpers
