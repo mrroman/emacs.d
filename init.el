@@ -116,7 +116,7 @@
 
 (use-package undo-tree
   :diminish undo-tree-mode
-  :bind ("C-x u" . undo-tree-mode)
+  :bind ("C-x u" . undo-tree)
   :config
   (global-undo-tree-mode))
 
