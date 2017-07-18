@@ -701,6 +701,12 @@
 (use-package restclient
   :commands (restclient-mode))
 
+(use-package ob-restclient)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((restclient . t)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; MPD client
