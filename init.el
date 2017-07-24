@@ -65,7 +65,9 @@
   (package-install 'use-package))
 
 (require 'use-package)
+(setq use-package-verbose t)
 (setq use-package-always-ensure t)
+;;; (setq use-package-minimum-reported-time 0.05)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -78,7 +80,7 @@
   (equal system-type system))
 
 (use-package exec-path-from-shell
-  :if (not (my/system-p 'windows-nt))
+  :unless (equal system-type 'windows-nt)
   :config
   (add-to-list 'exec-path-from-shell-variables "GOROOT")
   (add-to-list 'exec-path-from-shell-variables "ANDROID_HOME")
@@ -362,12 +364,13 @@
   :mode ("\\.js\\'" "\\.jsx\\'"))
 
 (use-package company-tern
-  :config
+  :mode (".tern-project" . js-mode)
+  :commands (company-tern tern-mode)
+  :init
   (add-hook 'js2-mode-hook (lambda ()
                              (progn
                                (add-to-list 'company-backends 'company-tern)
-                               (tern-mode))))
-  (add-to-list 'auto-mode-alist '(".tern-project" . js-mode)))
+                               (tern-mode)))))
 
 (use-package nvm
   :config
@@ -429,7 +432,7 @@
 ;; Java
 
 (use-package meghanada
-  :mode ("\\.java$")
+  :commands (meghanada-mode)
   :config
   (add-hook 'java-mode-hook
             (lambda ()
@@ -442,20 +445,21 @@
 (message "Loading extensions: Python")
 
 (use-package anaconda-mode
-  :mode ("\\.py$")
-  :config
+  :commands (anaconda-mode anaconda-eldoc-mode)
+  :init
   (add-hook 'python-mode-hook (lambda ()
                                 (anaconda-mode 1)
                                 (anaconda-eldoc-mode 1))))
 
 (use-package company-anaconda
-  :mode ("\\.py$")
-  :config
+  :commands (company-anaconda)
+  :init
   (add-hook 'python-mode-hook (lambda ()
                                 (add-to-list 'company-backends 'company-anaconda))))
 
 (use-package pyenv-mode
-  :config
+  :commands (pyenv-mode-set pyenv-mode pyenv-mode-unset)
+  :init
   (defun my/projectile-pyenv-mode-set ()
     "Set pyenv version matching project name."
     (let ((project-dir (locate-dominating-file "." ".python-version")))
@@ -466,7 +470,7 @@
   (add-hook 'projectile-switch-project-hook 'my/projectile-pyenv-mode-set))
 
 (use-package nose
-  :mode ("\\.py$")
+  :commands (nosetests-again nosetests-all nosetests-module)
   :bind (:map python-mode-map
               ("C-c t a" . nosetests-all)
               ("C-c t m" . nosetests-module)
@@ -491,27 +495,27 @@
 (message "Loading extensions: Clojure")
 
 (use-package cider
+  :commands (cider-jack-in cider-jack-in-clojurescript)
   :bind (("TAB" . company-indent-or-complete-common)
          :map clojure-mode-map
          ("C-c C-j" . imenu))
   :config
   (setq cider-repl-display-help-banner nil)
+  (setq cider-refresh-before-fn "mount.core/stop"
+        cider-refresh-after-fn "mount.core/start")
   (add-hook 'clojure-mode-hook (lambda ()
                                  (yas-minor-mode 1))))
 
 (use-package clj-refactor
-  :config
-  (defun my/clj-refactor-init ()
-    (clj-refactor-mode 1)
-    (cljr-add-keybindings-with-prefix "M-RET"))
-  (add-hook 'clojure-mode-hook #'my/clj-refactor-init))
+  :commands (clj-refactor-mode)
+  :init
+  (add-hook 'clojure-mode-hook (lambda ()
+                                 (clj-refactor-mode 1)
+                                 (cljr-add-keybindings-with-prefix "M-RET"))))
 
 (use-package flycheck-joker
   :config
   (require 'flycheck-joker))
-
-(setq cider-refresh-before-fn "dev/stop"
-      cider-refresh-after-fn "dev/start")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -557,7 +561,7 @@
 (message "Loading extensions: Go")
 
 (use-package go-mode
-  :mode ("\\.go$" . go-mode)
+  :mode ("\\.go\\'" . go-mode)
   :bind (:map go-mode-map
               ("C-c d" . godoc-at-point)
               ("M-." . godef-jump))
@@ -565,6 +569,9 @@
   (let ((goimports (executable-find "goimports")))
     (when goimports
       (setq gofmt-command goimports)))
+  (use-package go-eldoc)
+  (use-package go-guru)
+  (use-package go-rename)
   (add-hook 'go-mode-hook (lambda ()
                             (go-eldoc-setup)
                             (subword-mode +1)
@@ -573,15 +580,8 @@
                             (setq-local whitespace-style '(face empty trailing lines-tail))
                             (add-hook 'before-save-hook 'gofmt-before-save nil t))))
 
-(use-package go-eldoc
-  :mode ("\\.go$" . go-mode))
-(use-package go-guru
-  :mode ("\\.go$" . go-mode))
-(use-package go-rename
-  :mode ("\\.go$" . go-mode))
-
 (use-package gotest
-  :mode ("\\.go$" . go-mode)
+  :commands (go-run go-test-current-project go-test-current-file go-test-current-test)
   :bind (:map go-mode-map
               ("C-c a" . go-test-current-project)
               ("C-c m" . go-test-current-file)
@@ -589,8 +589,8 @@
               ("C-c b" . go-run)))
 
 (use-package company-go
-  :mode ("\\.go$" . go-mode)
-  :config
+  :commands (company-go)
+  :init
   (add-hook 'go-mode-hook (lambda ()
                             (set (make-local-variable 'company-backends) '(company-go)))))
 
@@ -599,6 +599,9 @@
 ;; Scala
 
 (message "Loading extensions: Scala")
+
+(use-package scala-mode
+  :mode ("\\.scala\\'"))
 
 (use-package ensime
   :ensure t
@@ -663,8 +666,11 @@
                                  "Październik" "Listopad" "Grudzień"])
 
 (use-package ox-reveal
-  :config
-  (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/"))
+  :defer t
+  :init
+  (add-hook 'org-mode-hook (lambda ()
+                             (require 'ox-reveal)
+                             (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/"))))
 
 (require 'ob-java)
 (require 'ob-python)
@@ -715,6 +721,7 @@
 
 (use-package mpc
   :ensure nil
+  :if (eq system-type 'gnu/linux)
   :bind (:map mpc-mode-map
               ("M-RET" . mpc-play-at-point)))
 
