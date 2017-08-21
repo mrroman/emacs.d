@@ -118,7 +118,7 @@
 
 (use-package undo-tree
   :diminish undo-tree-mode
-  :bind ("C-x u" . undo-tree)
+  :bind ("C-x u" . undo-tree-visualize)
   :config
   (global-undo-tree-mode))
 
@@ -470,11 +470,15 @@
   (add-hook 'projectile-switch-project-hook 'my/projectile-pyenv-mode-set))
 
 (use-package nose
-  :commands (nosetests-again nosetests-all nosetests-module)
   :bind (:map python-mode-map
               ("C-c t a" . nosetests-all)
               ("C-c t m" . nosetests-module)
               ("C-c t t" . nosetests-again)))
+
+(use-package importmagic
+  :ensure t
+  :config
+  (add-hook 'python-mode-hook 'importmagic-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
