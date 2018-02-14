@@ -137,13 +137,16 @@
 
 (use-package ivy
   :diminish ivy-mode
+  :pin melpa
   :config
   (setq ivy-use-virtual-buffers t)
   (ivy-mode 1))
 
-(use-package ivy-hydra)
+(use-package ivy-hydra
+  :pin melpa)
 
 (use-package counsel
+  :pin melpa
   :bind (("M-x" . counsel-M-x)
          ("M-y" . counsel-yank-pop)
          ("C-x C-f" . counsel-find-file)
@@ -151,6 +154,7 @@
 
 (use-package swiper
   :bind (("C-s" . swiper))
+  :pin melpa
   :config
   (define-key swiper-map (kbd "C-.")
     (lambda ()
