@@ -1,3 +1,6 @@
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
+(require 'my)
+
 (setq inhibit-startup-screen t
       initial-scratch-message nil
 
@@ -30,6 +33,10 @@
               tab-width 4
               c-basic-offset 4)
 
+(when (my/system-p 'darwin)
+  (add-to-list 'exec-path "/usr/local/bin")
+  (setenv "PATH" (format "%s:/usr/local/bin" (getenv "PATH"))))
+
 (electric-indent-mode t)
 (electric-pair-mode t)
 (eldoc-mode)
@@ -40,13 +47,10 @@
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
-(require 'my)
-
 ;;; UI
 
 (when window-system
-  (load-theme 'dichromacy)
+  (load-theme 'wombat)
   (cond
    ((my/system-p 'darwin) (progn
                             (my/set-font "Iosevka Term 16")
@@ -81,7 +85,21 @@
 (setq use-package-always-ensure t)
 (setq use-package-always-pin "melpa-stable")
 
+;;;; UI
+
+(use-package spaceline
+  :config
+  (require 'spaceline-config)
+  (spaceline-emacs-theme))
+
+(use-package diminish)
+(use-package delight
+  :pin gnu)
+
 ;;;; Editing
+
+(use-package ace-jump-mode
+  :bind ("C-c SPC" . ace-jump-char-mode))
 
 (use-package whole-line-or-region
   :diminish whole-line-or-region-mode
@@ -118,6 +136,7 @@
 ;;;; Ivy - Counsel
 
 (use-package ivy
+  :diminish ivy-mode
   :config
   (setq ivy-use-virtual-buffers t)
   (ivy-mode 1))
@@ -149,6 +168,7 @@
 
 (use-package projectile
   :ensure projectile
+  :delight '(:eval (concat " " (projectile-project-name)))
   :config
   (progn
     (setq projectile-completion-system 'ivy)
@@ -158,7 +178,10 @@
 
 (use-package dired-x
   :ensure nil
-  :bind ("C-x C-j" . dired-jump))
+  :bind ("C-x C-j" . dired-jump)
+  :config
+  (add-hook 'dired-mode-hook (lambda () (dired-omit-mode)))
+  (setq dired-omit-files (concat dired-omit-files "\\|^\\.[^\\.]")))
 
 ;;;; Coding
 
@@ -176,6 +199,7 @@
   (company-quickhelp-mode 1))
 
 (use-package flycheck
+  :diminish flycheck-mode
   :config
   (global-flycheck-mode))
 
@@ -249,3 +273,64 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((restclient . t)))
+
+;;; Docker file
+
+(use-package dockerfile-mode
+  :pin melpa)
+
+(use-package powershell)
+
+;;; Javascript
+
+(use-package js2-mode
+  :mode ("\\.jsx?\\'" . js2-mode)
+  :config
+  (add-hook 'javascript-mode #'js2-mode))
+
+(use-package js2-refactor
+  :config
+  (add-hook 'js2-mode-hook #'js2-refactor-mode)
+  (js2r-add-keybindings-with-prefix "M-RET"))
+
+(use-package xref-js2
+  :config
+  (define-key js2-mode-map (kbd "M-.") nil)
+  (add-hook 'js2-mode-hook (lambda ()
+                             (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t))))
+
+(use-package tern
+  :pin melpa
+  :config
+  (add-hook 'js2-mode-hook #'tern-mode))
+
+(use-package company-tern
+  :pin melpa
+  :config
+  (add-hook 'js2-mode-hook #'(lambda ()
+                               (add-to-list 'company-backends 'company-tern))))
+
+(use-package nvm
+  :pin melpa
+  :config
+  (add-hook 'projectile-after-switch-project-hook #'(lambda ()
+                                                      (when (file-exists-p (expand-file-name ".nvmrc" (projectile-project-root)))
+                                                        (nvm-use-for (projectile-project-root))))))
+
+
+;; Terminal
+
+(defadvice term-handle-exit
+    (after term-kill-buffer-on-exit activate)
+  (kill-buffer))
+
+(global-set-key (kbd "C-c t") #'(lambda ()
+                                  (interactive)
+                                  (ansi-term (getenv "SHELL"))))
+
+;; Start server
+
+(require 'server)
+(unless (server-running-p)
+    (server-start))
+
