@@ -47,6 +47,13 @@
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+(require 'dired-x)
+(add-hook 'dired-mode-hook (lambda () (dired-omit-mode)))
+(setq dired-omit-files (concat dired-omit-files "\\|^\\.[^\\.]"))
+
+(global-set-key (kbd "C-x C-d") #'dired)
+(global-set-key (kbd "C-x C-j") #'dired-jump)
+
 ;;; UI
 
 (when window-system
@@ -179,13 +186,6 @@
     (projectile-global-mode t)))
 
 (use-package ag)
-
-(use-package dired-x
-  :ensure nil
-  :bind ("C-x C-j" . dired-jump)
-  :config
-  (add-hook 'dired-mode-hook (lambda () (dired-omit-mode)))
-  (setq dired-omit-files (concat dired-omit-files "\\|^\\.[^\\.]")))
 
 ;;;; Coding
 
