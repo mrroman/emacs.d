@@ -332,6 +332,14 @@
                                   (interactive)
                                   (ansi-term (getenv "SHELL"))))
 
+;; Music player
+
+(use-package emms
+  :config
+  (emms-default-players)
+  (require 'emms-mode-line)
+  (emms-mode-line 1))
+
 ;; Start server
 
 (require 'server)
