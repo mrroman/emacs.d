@@ -336,6 +336,8 @@
 
 (use-package emms
   :config
+  (require 'emms-setup)
+  (emms-standard)
   (emms-default-players)
   (require 'emms-mode-line)
   (emms-mode-line 1))
