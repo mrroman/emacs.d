@@ -177,6 +177,10 @@
   :config
   (setq magit-completing-read-function 'ivy-completing-read))
 
+(use-package git-gutter
+  :config
+  (global-git-gutter-mode 1))
+
 (use-package projectile
   :ensure projectile
   :delight '(:eval (concat " " (projectile-project-name)))
