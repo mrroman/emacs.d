@@ -352,13 +352,14 @@
   "
 _+_ add         _[_ previous
 _p_ play/pause  _]_ next
-_s_ stop
+_s_ stop        _l_ list
 "
   ("+" emms-add-dired)
   ("p" emms-pause)
   ("s" emms-stop)
   ("[" emms-previous)
   ("]" emms-next)
+  ("l" emms)
   ("q" nil)
   ("<f5>" nil))
 
