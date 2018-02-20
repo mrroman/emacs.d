@@ -346,6 +346,33 @@
   (require 'emms-mode-line)
   (emms-mode-line 1))
 
+;; Hydras
+
+(defhydra hydra-emms (:hint nil :color blue)
+  "
+_+_ add         _[_ previous
+_p_ play/pause  _]_ next
+_s_ stop
+"
+  ("+" emms-add-dired)
+  ("p" emms-pause)
+  ("s" emms-stop)
+  ("[" emms-previous)
+  ("]" emms-next)
+  ("q" nil)
+  ("<f5>" nil))
+
+(global-set-key (kbd "<f5>") 'hydra-emms/body)
+
+;; Calendar
+
+(setq calendar-week-start-day 1
+      calendar-day-name-array ["Niedziela" "Poniedziałek" "Wtorek" "Środa"
+                               "Czwartek" "Piątek" "Sobota"]
+      calendar-month-name-array ["Styczeń" "Luty" "Marzec" "Kwiecień" "Maj"
+                                 "Czerwiec" "Lipiec" "Sierpień" "Wrzesień"
+                                 "Październik" "Listopad" "Grudzień"])
+
 ;; Start server
 
 (require 'server)
