@@ -330,6 +330,7 @@
 
 (defadvice term-handle-exit
     (after term-kill-buffer-on-exit activate)
+  "Close terminal on exit."
   (kill-buffer))
 
 (global-set-key (kbd "C-c t") #'(lambda ()
@@ -373,6 +374,20 @@ _s_ stop        _l_ list
       calendar-month-name-array ["Styczeń" "Luty" "Marzec" "Kwiecień" "Maj"
                                  "Czerwiec" "Lipiec" "Sierpień" "Wrzesień"
                                  "Październik" "Listopad" "Grudzień"])
+
+;; GO
+
+(when (not (getenv "GOPATH"))
+  (setenv "GOPATH" (expand-file-name "~/go")))
+(add-to-list 'exec-path (format "%s/bin" (getenv "GOPATH")))
+
+(use-package go-mode)
+
+(use-package company-go
+  :config
+  (add-hook 'go-mode-hook (lambda ()
+                            (set (make-local-variable 'company-backends) '(company-go))
+                            (company-mode))))
 
 ;; Start server
 
