@@ -389,6 +389,31 @@ _s_ stop        _l_ list
                             (set (make-local-variable 'company-backends) '(company-go))
                             (company-mode))))
 
+;; org mode
+
+(use-package org
+  :ensure org
+  :pin org
+  :bind (("C-c c" . org-capture)
+         ("C-c a" . org-agenda))
+  :config
+  (progn
+    (when (file-exists-p "~/Dropbox/Notatki")
+      (setq org-directory "~/Dropbox/Notatki"))
+    (setq org-default-notes-file (concat org-directory "/notes.org"))
+    (setq org-agenda-files (list org-directory))
+    (setq org-refile-targets
+          '((nil :maxlevel . 3)
+            (org-agenda-files :maxlevel . 3)))))
+
+(use-package org-bullets
+  :config
+  (org-bullets-mode)
+  (add-hook 'org-mode-hook #'org-bullets-mode))
+
+(setq org-latex-listings 'minted)
+(add-to-list 'org-latex-packages-alist '("" "minted"))
+
 ;; Start server
 
 (require 'server)
