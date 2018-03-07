@@ -236,6 +236,10 @@
   (setq cider-repl-display-help-banner nil)
   (setq cider-refresh-before-fn "mount.core/stop"
         cider-refresh-after-fn "mount.core/start")
+  (setq cider-cljs-lein-repl
+      "(do (require 'figwheel-sidecar.repl-api)
+           (figwheel-sidecar.repl-api/start-figwheel!)
+           (figwheel-sidecar.repl-api/cljs-repl))")
   (add-hook 'clojure-mode-hook (lambda ()
                                  (yas-minor-mode 1))))
 
