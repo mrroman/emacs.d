@@ -65,7 +65,7 @@
    ((my/system-p 'windows-nt) (progn
                                 (my/set-font "Iosevka Term 11")
                                 (set-frame-size (selected-frame) 140 40)))
-   ((my/system-p 'gnu/linux) (my/set-font "Iosevka Term 13"))))
+   ((my/system-p 'gnu/linux) (my/set-font "Iosevka Term 12"))))
 
 ;;;
 ;;; Extensions
