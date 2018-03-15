@@ -61,7 +61,7 @@
   (cond
    ((my/system-p 'darwin) (progn
                             (my/set-font "Iosevka Term 16")
-                            (set-frame-size (selected-frame) 170 42)))
+                            (set-frame-size (selected-frame) 140 40)))
    ((my/system-p 'windows-nt) (progn
                                 (my/set-font "Iosevka Term 11")
                                 (set-frame-size (selected-frame) 140 40)))
