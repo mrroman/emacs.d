@@ -142,6 +142,15 @@
          ("C-c C-M->" . mc/skip-to-next-like-this)
          ("C-c C-M-<" . mc/skip-to-previous-like-this)))
 
+(use-package whitespace
+  :ensure nil
+  :diminish global-whitespace-mode
+  :config
+  (setq whitespace-line-column 80
+        whitespace-style '(face tabs empty trailing lines-tail))
+  (global-whitespace-mode)
+  (add-hook 'before-save-hook 'whitespace-cleanup))
+
 ;;;; Ivy - Counsel
 
 (use-package ivy
@@ -430,4 +439,3 @@ _s_ stop        _l_ list
 (require 'server)
 (unless (server-running-p)
     (server-start))
-
