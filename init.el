@@ -434,9 +434,6 @@ _s_ stop        _l_ list
 (setq org-latex-listings 'minted)
 (add-to-list 'org-latex-packages-alist '("" "minted"))
 
-(use-package neotree
-  :bind ("C-x C-n" . neotree-toggle))
-
 ;; Start server
 
 (require 'server)
