@@ -244,6 +244,7 @@
          :map clojure-mode-map
          ("C-c C-j" . imenu))
   :config
+  (setq clojure-align-forms-automatically t)
   (setq cider-repl-display-help-banner nil)
   (setq cider-refresh-before-fn "mount.core/stop"
         cider-refresh-after-fn "mount.core/start")
@@ -269,10 +270,13 @@
 
 ;;;; Lisp
 
-(use-package parinfer
+(use-package paredit
   :config
-  (add-hook 'lisp-mode-hook (lambda () (parinfer-mode)))
-  (add-hook 'clojure-mode-hook (lambda () (parinfer-mode))))
+  (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
+  (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+  (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+  (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+  (add-hook 'clojure-mode-hook #'enable-paredit-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
