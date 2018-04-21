@@ -366,11 +366,6 @@
   (require 'emms-mode-line)
   (emms-mode-line 1))
 
-(use-package emms-player-mpv
-  :pin melpa
-  :config
-  (add-to-list 'emms-player-list 'emms-player-mpv))
-
 ;; Hydras
 
 (defhydra hydra-emms (:hint nil :color blue)
