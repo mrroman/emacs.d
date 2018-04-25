@@ -239,6 +239,7 @@
 ;;;; Clojure
 
 (use-package cider
+  :pin melpa
   :commands (cider-jack-in cider-jack-in-clojurescript)
   :bind (("TAB" . company-indent-or-complete-common)
          :map clojure-mode-map
@@ -246,8 +247,8 @@
   :config
   (setq clojure-align-forms-automatically t)
   (setq cider-repl-display-help-banner nil)
-  (setq cider-refresh-before-fn "mount.core/stop"
-        cider-refresh-after-fn "mount.core/start")
+  (setq cider-refresh-before-fn "dev/stop"
+        cider-refresh-after-fn "dev/start")
   (setq cider-cljs-lein-repl
       "(do (require 'figwheel-sidecar.repl-api)
            (figwheel-sidecar.repl-api/start-figwheel!)
@@ -257,12 +258,14 @@
 
 (use-package clj-refactor
   :commands (clj-refactor-mode)
+  :pin melpa
   :init
   (add-hook 'clojure-mode-hook (lambda ()
                                  (clj-refactor-mode 1)
                                  (cljr-add-keybindings-with-prefix "M-RET"))))
 
 (use-package flycheck-joker
+  :pin melpa
   :config
   (require 'flycheck-joker))
 
