@@ -1,5 +1,17 @@
+(setq gc-cons-threshold (* 50 1000 1000))
+
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 (require 'my)
+;;(require 'abn-funcs-benchmark)
+
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "Emacs ready in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
+
 
 (setq inhibit-startup-screen t
       initial-scratch-message nil
@@ -118,9 +130,11 @@
 (use-package undo-tree
   :pin gnu
   :diminish undo-tree-mode
-  :bind ("C-x u" . undo-tree-visualize)
-  :config
-  (global-undo-tree-mode))
+  :bind (("C-x u" . undo-tree-visualize)
+         ("C-?" . undo-tree-redo)
+         ("C-/" . undo-tree-undo)
+         ("C-_" . undo-tree-undo)
+         ("M-_" . undo-tree-redo)))
 
 (use-package expand-region
   :bind ("M-SPC" . er/expand-region))
@@ -137,6 +151,7 @@
 (use-package smex)
 
 (use-package multiple-cursors
+  :defer t
   :bind (("C-M->" . mc/mark-next-like-this)
          ("C-M-<" . mc/mark-previous-like-this)
          ("C-c C-M->" . mc/skip-to-next-like-this)
@@ -185,6 +200,7 @@
 
 (use-package magit
   :bind (("C-x g" . magit-status))
+  :defer t
   :config
   (setq magit-completing-read-function 'ivy-completing-read))
 
@@ -287,7 +303,9 @@
 
 (message "Loading extensions: YAML")
 
-(use-package yaml-mode)
+(use-package yaml-mode
+  :defer t
+  :mode ("\\.yml\\'" . yaml-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -307,46 +325,55 @@
 ;;; Docker file
 
 (use-package dockerfile-mode
-  :pin melpa)
+  :pin melpa
+  :defer t
+  :mode ("Dockerfile" . dockerfile-mode))
 
-(use-package powershell)
+(use-package powershell
+  :defer t)
 
 ;;; Javascript
 
 (use-package js2-mode
   :mode ("\\.jsx?\\'" . js2-mode)
-  :config
-  (add-hook 'javascript-mode #'js2-mode))
+  :defer t
+  :hook (javascript-mode . js2-mode))
 
 (use-package js2-refactor
+  :after (js2-mode)
+  :defer t
+  :hook (js2-mode . js2-refactor-mode)
   :config
-  (add-hook 'js2-mode-hook #'js2-refactor-mode)
   (js2r-add-keybindings-with-prefix "M-RET"))
 
 (use-package xref-js2
-  :config
-  (define-key js2-mode-map (kbd "M-.") nil)
-  (add-hook 'js2-mode-hook (lambda ()
-                             (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t))))
+  :after (js2-mode)
+  :defer t
+  :bind (:map js2-mode-map
+              ("M-." . nil))
+  :hook (js2-mode . (lambda ()
+                      (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t))))
 
 (use-package tern
   :pin melpa
-  :config
-  (add-hook 'js2-mode-hook #'tern-mode))
+  :defer t
+  :after (js2-mode)
+  :hook (js2-mode . tern-mode))
 
 (use-package company-tern
   :pin melpa
-  :config
-  (add-hook 'js2-mode-hook #'(lambda ()
-                               (add-to-list 'company-backends 'company-tern))))
+  :defer t
+  :after (tern)
+  :hook (js2-mode . (lambda ()
+                      (add-to-list 'company-backends 'company-tern))))
 
 (use-package nvm
   :pin melpa
-  :config
-  (add-hook 'projectile-after-switch-project-hook #'(lambda ()
-                                                      (when (file-exists-p (expand-file-name ".nvmrc" (projectile-project-root)))
-                                                        (nvm-use-for (projectile-project-root))))))
-
+  :defer t
+  :after (projectile)
+  :hook (projectile-after-switch-project . (lambda ()
+                                             (when (file-exists-p (expand-file-name ".nvmrc" (projectile-project-root)))
+                                               (nvm-use-for (projectile-project-root))))))
 
 ;; Terminal
 
@@ -362,6 +389,8 @@
 ;; Music player
 
 (use-package emms
+  :defer t
+  :commands (emms emms-add-dired emms-pause emms-stop emms-previous emms-next)
   :config
   (require 'emms-setup)
   (emms-standard)
@@ -403,13 +432,15 @@ _s_ stop        _l_ list
   (setenv "GOPATH" (expand-file-name "~/go")))
 (add-to-list 'exec-path (format "%s/bin" (getenv "GOPATH")))
 
-(use-package go-mode)
+(use-package go-mode
+  :defer t)
 
 (use-package company-go
-  :config
-  (add-hook 'go-mode-hook (lambda ()
-                            (set (make-local-variable 'company-backends) '(company-go))
-                            (company-mode))))
+  :defer t
+  :after (go-mode)
+  :hook (go-mode . (lambda ()
+                     (set (make-local-variable 'company-backends) '(company-go))
+                     (company-mode))))
 
 ;; org mode
 
@@ -441,3 +472,6 @@ _s_ stop        _l_ list
 (require 'server)
 (unless (server-running-p)
     (server-start))
+
+;; Make gc pauses faster by decreasing the threshold.
+(setq gc-cons-threshold (* 2 1000 1000))
