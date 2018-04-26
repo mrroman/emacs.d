@@ -222,14 +222,19 @@
 
 (use-package company
   :diminish company-mode
+  :defer 3
   :config
   (setq company-idle-delay 0.1)
   (global-company-mode))
 
-(use-package pos-tip)
+(use-package pos-tip
+  :defer t
+  :after (company))
 
 (use-package company-quickhelp
   :if window-system
+  :defer t
+  :after (company)
   :config
   (company-quickhelp-mode 1))
 
@@ -256,6 +261,7 @@
 
 (use-package cider
   :pin melpa
+  :defer t
   :commands (cider-jack-in cider-jack-in-clojurescript)
   :bind (("TAB" . company-indent-or-complete-common)
          :map clojure-mode-map
@@ -275,6 +281,7 @@
 (use-package clj-refactor
   :commands (clj-refactor-mode)
   :pin melpa
+  :after (cider)
   :init
   (add-hook 'clojure-mode-hook (lambda ()
                                  (clj-refactor-mode 1)
@@ -282,10 +289,13 @@
 
 (use-package flycheck-joker
   :pin melpa
+  :defer t
+  :after (cider)
+  :demand t
   :config
   (require 'flycheck-joker))
 
-(require 'cider-cli)
+;; (require 'cider-cli)
 
 ;;;; Lisp
 
