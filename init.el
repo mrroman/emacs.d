@@ -68,8 +68,8 @@
 
 ;;; UI
 
+(load-theme 'wombat)
 (when window-system
-  (load-theme 'wombat)
   (cond
    ((my/system-p 'darwin) (progn
                             (my/set-font "Iosevka Term 16")
