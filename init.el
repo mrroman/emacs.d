@@ -120,7 +120,7 @@
 ;;;; Editing
 
 (use-package ace-jump-mode
-  :bind ("C-c SPC" . ace-jump-char-mode))
+  :bind ("C-." . ace-jump-char-mode))
 
 (use-package whole-line-or-region
   :diminish whole-line-or-region-mode
@@ -274,24 +274,19 @@
   (setq cider-cljs-lein-repl
       "(do (require 'figwheel-sidecar.repl-api)
            (figwheel-sidecar.repl-api/start-figwheel!)
-           (figwheel-sidecar.repl-api/cljs-repl))")
-  (add-hook 'clojure-mode-hook (lambda ()
-                                 (yas-minor-mode 1))))
+           (figwheel-sidecar.repl-api/cljs-repl))"))
 
-(use-package clj-refactor
-  :commands (clj-refactor-mode)
-  :pin melpa
-  :after (cider)
-  :init
-  (add-hook 'clojure-mode-hook (lambda ()
-                                 (clj-refactor-mode 1)
-                                 (cljr-add-keybindings-with-prefix "M-RET"))))
+;; (use-package clj-refactor
+;;   :commands (clj-refactor-mode)
+;;   :pin melpa
+;;   :after (cider)
+;;   :init
+;;   (add-hook 'clojure-mode-hook (lambda ()
+;;                                  (clj-refactor-mode 1)
+;;                                  (cljr-add-keybindings-with-prefix "M-RET"))))
 
 (use-package flycheck-joker
   :pin melpa
-  :defer t
-  :after (cider)
-  :demand t
   :config
   (require 'flycheck-joker))
 
