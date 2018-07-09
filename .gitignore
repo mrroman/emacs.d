@@ -12,3 +12,4 @@ url/
 network-security.data
 session.*
 tramp
+.cache

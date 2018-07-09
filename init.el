@@ -30,9 +30,13 @@
       help-window-select t
       custom-file (expand-file-name "~/.emacs.d/custom.el"))
 
-(setq scroll-margin 0
-      scroll-conservatively 100000
-      scroll-preserve-screen-position 1)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-progressive-speed t) ;; don't accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+(setq scroll-step 1
+      scroll-conservatively  10000) ;; keyboard scroll one line at a time
+
+(add-hook 'prog-mode-hook #'display-line-numbers-mode) ;; display line numbers
 
 (when window-system
   (menu-bar-mode -1)
@@ -161,7 +165,7 @@
   :ensure nil
   :diminish global-whitespace-mode
   :config
-  (setq whitespace-line-column 80
+  (setq whitespace-line-column 120
         whitespace-style '(face tabs empty trailing lines-tail))
   (global-whitespace-mode)
   (add-hook 'before-save-hook 'whitespace-cleanup))
@@ -217,6 +221,10 @@
     (projectile-global-mode t)))
 
 (use-package ag)
+
+(use-package treemacs)
+
+(use-package treemacs-projectile)
 
 ;;;; Coding
 
@@ -480,3 +488,5 @@ _s_ stop        _l_ list
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
+
+(global-set-key (kbd "C-'") 'treemacs)
