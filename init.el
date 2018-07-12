@@ -72,7 +72,8 @@
 
 ;;; UI
 
-(load-theme 'wombat)
+;;(load-theme 'wheatgrass)
+(require 'ample-zen-theme)
 (when window-system
   (cond
    ((my/system-p 'darwin) (progn
@@ -268,7 +269,7 @@
 ;;;; Clojure
 
 (use-package cider
-  :pin melpa
+  :pin melpa-stable
   :defer t
   :commands (cider-jack-in cider-jack-in-clojurescript)
   :bind (("TAB" . company-indent-or-complete-common)
@@ -286,7 +287,7 @@
 
 ;; (use-package clj-refactor
 ;;   :commands (clj-refactor-mode)
-;;   :pin melpa
+;;   :pin melpa-stable
 ;;   :after (cider)
 ;;   :init
 ;;   (add-hook 'clojure-mode-hook (lambda ()
