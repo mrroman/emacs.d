@@ -280,6 +280,8 @@
   (setq cider-repl-display-help-banner nil)
   (setq cider-refresh-before-fn "dev/stop"
         cider-refresh-after-fn "dev/start")
+  (setq cider-clojure-cli-global-options "-Atest")
+  (setq cider-repl-pop-to-buffer-on-connect nil)
   (setq cider-cljs-lein-repl
       "(do (require 'figwheel-sidecar.repl-api)
            (figwheel-sidecar.repl-api/start-figwheel!)
@@ -300,6 +302,24 @@
   (require 'flycheck-joker))
 
 ;; (require 'cider-cli)
+
+;;;; Python
+
+(use-package anaconda-mode
+  :pin melpa
+  :commands (anaconda-mode anaconda-eldoc-mode)
+  :init
+  (add-hook 'python-mode-hook (lambda ()
+                                (anaconda-mode 1)
+                                (anaconda-eldoc-mode 1))))
+
+(use-package company-anaconda
+  :pin melpa
+  :after (company)
+  :commands (company-anaconda)
+  :init
+  (add-hook 'python-mode-hook (lambda ()
+                                (add-to-list 'company-backends 'company-anaconda))))
 
 ;;;; Lisp
 
