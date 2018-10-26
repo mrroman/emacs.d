@@ -39,8 +39,6 @@
 (add-hook 'prog-mode-hook #'display-line-numbers-mode) ;; display line numbers
 
 (when window-system
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
   (scroll-bar-mode -1))
 
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -121,6 +119,15 @@
 (use-package diminish)
 (use-package delight
   :pin gnu)
+
+(use-package dashboard
+    :ensure t
+    :diminish dashboard-mode
+    :config
+    (setq dashboard-items '((recents  . 10)
+                            (bookmarks . 10)
+                            (projects . 5)))
+    (dashboard-setup-startup-hook))
 
 ;;;; Editing
 
@@ -271,10 +278,10 @@
 (use-package cider
   :pin melpa-stable
   :defer t
-  :commands (cider-jack-in cider-jack-in-clojurescript)
+  :commands (cider-jack-in-clj cider-jack-in-cljs cider-jack-in-clj&cljs)
   :bind (("TAB" . company-indent-or-complete-common)
          :map clojure-mode-map
-         ("C-c C-j" . imenu))
+         ("C-c j" . imenu))
   :config
   (setq clojure-align-forms-automatically t)
   (setq cider-repl-display-help-banner nil)
@@ -287,21 +294,27 @@
            (figwheel-sidecar.repl-api/start-figwheel!)
            (figwheel-sidecar.repl-api/cljs-repl))"))
 
-;; (use-package clj-refactor
-;;   :commands (clj-refactor-mode)
-;;   :pin melpa-stable
-;;   :after (cider)
-;;   :init
-;;   (add-hook 'clojure-mode-hook (lambda ()
-;;                                  (clj-refactor-mode 1)
-;;                                  (cljr-add-keybindings-with-prefix "M-RET"))))
+(defun cljfmt ()
+  (when (or (eq major-mode 'clojure-mode)
+            (eq major-mode 'clojurescript-mode))
+    (shell-command-to-string (format "cljfmt %s" buffer-file-name))
+    (revert-buffer :ignore-auto :noconfirm)))
+
+(add-hook 'after-save-hook #'cljfmt)
+
+(use-package clj-refactor
+  :commands (clj-refactor-mode)
+  :pin melpa-stable
+  :after (cider)
+  :init
+  (add-hook 'clojure-mode-hook (lambda ()
+                                 (clj-refactor-mode 1)
+                                 (cljr-add-keybindings-with-prefix "M-RET"))))
 
 (use-package flycheck-joker
   :pin melpa
   :config
   (require 'flycheck-joker))
-
-;; (require 'cider-cli)
 
 ;;;; Python
 
