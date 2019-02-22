@@ -13,3 +13,5 @@ network-security.data
 session.*
 tramp
 .cache
+projectile.cache
+anaconda-mode

@@ -39,6 +39,8 @@
 (add-hook 'prog-mode-hook #'display-line-numbers-mode) ;; display line numbers
 
 (when window-system
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
   (scroll-bar-mode -1))
 
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -226,7 +228,8 @@
   :config
   (progn
     (setq projectile-completion-system 'ivy)
-    (projectile-global-mode t)))
+    (projectile-mode +1)
+    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)))
 
 (use-package ag)
 
@@ -281,7 +284,7 @@
   :commands (cider-jack-in-clj cider-jack-in-cljs cider-jack-in-clj&cljs)
   :bind (("TAB" . company-indent-or-complete-common)
          :map clojure-mode-map
-         ("C-c j" . imenu))
+         ("C-c C-j" . imenu))
   :config
   (setq clojure-align-forms-automatically t)
   (setq cider-repl-display-help-banner nil)
