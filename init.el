@@ -73,7 +73,7 @@
 ;;; UI
 
 ;;(load-theme 'wheatgrass)
-(require 'ample-zen-theme)
+;;(require 'ample-zen-theme)
 (when window-system
   (cond
    ((my/system-p 'darwin) (progn
@@ -83,7 +83,7 @@
                                 (my/set-font "Iosevka Term 11")
                                 (set-frame-size (selected-frame) 140 40)))
    ((my/system-p 'gnu/linux) (progn
-                               (my/set-font "Iosevka Term 12")
+                               (my/set-font "Iosevka Term 13")
                                (set-frame-size (selected-frame) 140 40)))))
 
 ;;;
@@ -113,6 +113,21 @@
 
 ;;;; UI
 
+(use-package all-the-icons
+  :pin melpa)
+
+(use-package doom-themes
+  :pin melpa
+  :config
+  (load-theme 'doom-city-lights t))
+
+(use-package solaire-mode
+  :hook
+  ((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
+  (minibuffer-setup . solaire-mode-in-minibuffer)
+  :config
+  (solaire-mode-swap-bg))
+
 (use-package spaceline
   :config
   (require 'spaceline-config)
@@ -123,13 +138,18 @@
   :pin gnu)
 
 (use-package dashboard
-    :ensure t
-    :diminish dashboard-mode
-    :config
-    (setq dashboard-items '((recents  . 10)
-                            (bookmarks . 10)
-                            (projects . 5)))
-    (dashboard-setup-startup-hook))
+  :ensure t
+  :diminish dashboard-mode
+  :config
+  (setq dashboard-items '((recents  . 10)
+                          (bookmarks . 10)
+                          (projects . 5)))
+  (dashboard-setup-startup-hook))
+
+(use-package eyebrowse
+  :config
+  (eyebrowse-mode t))
+
 
 ;;;; Editing
 
@@ -233,7 +253,9 @@
 
 (use-package ag)
 
-(use-package treemacs)
+(use-package treemacs
+  :config
+  (doom-themes-treemacs-config))
 
 (use-package treemacs-projectile)
 
@@ -509,12 +531,13 @@ _s_ stop        _l_ list
           '((nil :maxlevel . 3)
             (org-agenda-files :maxlevel . 3)))))
 
-(use-package org-bullets
-  :config
-  (org-bullets-mode)
-  (add-hook 'org-mode-hook #'org-bullets-mode))
+;; (use-package org-bullets
+;;   :config
+;;   (org-bullets-mode)
+;;   (add-hook 'org-mode-hook #'org-bullets-mode))
 
 (setq org-latex-listings 'minted)
+(doom-themes-org-config)
 (add-to-list 'org-latex-packages-alist '("" "minted"))
 
 ;; Start server
