@@ -234,9 +234,14 @@
 
 (use-package magit
   :bind (("C-x g" . magit-status))
+  :pin melpa
   :defer t
   :config
   (setq magit-completing-read-function 'ivy-completing-read))
+
+(use-package forge
+  :pin melpa
+  :after magit)
 
 (use-package git-gutter
   :config
@@ -454,7 +459,7 @@
   "Close terminal on exit."
   (kill-buffer))
 
-(global-set-key (kbd "C-c t") #'(lambda ()
+(global-set-key (kbd "C-`") #'(lambda ()
                                   (interactive)
                                   (ansi-term (getenv "SHELL"))))
 

@@ -16,3 +16,5 @@ tramp
 .cache
 projectile.cache
 anaconda-mode
+forge-database.sqlite
+transient/
