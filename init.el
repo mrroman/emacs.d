@@ -463,7 +463,9 @@
 (defadvice term-handle-exit
     (after term-kill-buffer-on-exit activate)
   "Close terminal on exit."
-  (kill-buffer))
+  (let ((buffer (current-buffer)))
+    (delete-window)
+    (kill-buffer buffer)))
 
 (defun my/ansi-term ()
   "Open term window and create new one if it doesn't exists."
