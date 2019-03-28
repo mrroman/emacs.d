@@ -303,6 +303,11 @@
 (setq-default compilation-scroll-output t)
 (add-hook 'compilation-filter-hook #'endless/colorize-compilation)
 
+(use-package yasnippet-snippets
+  :bind (("C-c y" . company-yasnippet))
+  :config
+  (yas-reload-all))
+
 ;;;; Clojure
 
 (use-package cider
@@ -339,6 +344,7 @@
   :init
   (add-hook 'clojure-mode-hook (lambda ()
                                  (clj-refactor-mode 1)
+                                 (yas-minor-mode 1)
                                  (cljr-add-keybindings-with-prefix "M-RET"))))
 
 (use-package flycheck-joker
@@ -459,9 +465,19 @@
   "Close terminal on exit."
   (kill-buffer))
 
-(global-set-key (kbd "C-`") #'(lambda ()
-                                  (interactive)
-                                  (ansi-term (getenv "SHELL"))))
+(defun my/ansi-term ()
+  "Open term window and create new one if it doesn't exists."
+  (interactive)
+  (if (equal (buffer-name (current-buffer))
+             "*ansi-term*")
+      (delete-window)
+    (progn
+      (split-window-below (/ (frame-height) 4))
+      (if (member "*ansi-term*" (mapcar #'buffer-name (buffer-list)))
+          (switch-to-buffer "*ansi-term*")
+        (ansi-term (getenv "SHELL"))))))
+
+(global-set-key (kbd "C-`") #'my/ansi-term)
 
 ;; Music player
 
@@ -473,7 +489,8 @@
   (emms-standard)
   (emms-default-players)
   (require 'emms-mode-line)
-  (emms-mode-line 1))
+  (emms-mode-line 1)
+  (add-hook 'emms-stream-play-hook #'emms-start))
 
 ;; Hydras
 
@@ -544,12 +561,6 @@ _s_ stop        _l_ list
 (setq org-latex-listings 'minted)
 (doom-themes-org-config)
 (add-to-list 'org-latex-packages-alist '("" "minted"))
-
-;; Start server
-
-(require 'server)
-(unless (server-running-p)
-    (server-start))
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
