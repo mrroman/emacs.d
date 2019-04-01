@@ -119,7 +119,7 @@
 (use-package doom-themes
   :pin melpa
   :config
-  (load-theme 'doom-city-lights t))
+  (load-theme 'doom-solarized-light t))
 
 (use-package solaire-mode
   :hook
@@ -568,3 +568,4 @@ _s_ stop        _l_ list
 (setq gc-cons-threshold (* 2 1000 1000))
 
 (global-set-key (kbd "C-'") 'treemacs)
+(put 'upcase-region 'disabled nil)
