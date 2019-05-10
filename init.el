@@ -119,7 +119,7 @@
 (use-package doom-themes
   :pin melpa
   :config
-  (load-theme 'doom-solarized-light t))
+  (load-theme 'doom-city-lights t))
 
 (use-package solaire-mode
   :hook
@@ -254,6 +254,8 @@
   (progn
     (setq projectile-completion-system 'ivy)
     (projectile-mode +1)
+    (setq projectile-switch-project-action #'projectile-vc)
+    (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)))
 
 (use-package ag)
@@ -492,6 +494,8 @@
   (emms-default-players)
   (require 'emms-mode-line)
   (emms-mode-line 1)
+  (require 'emms-stream-info)
+  (setq emms-stream-info-backend 'mpv)
   (add-hook 'emms-stream-play-hook #'emms-start))
 
 ;; Hydras
