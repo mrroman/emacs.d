@@ -69,11 +69,10 @@
 
 (global-set-key (kbd "C-x C-d") #'dired)
 (global-set-key (kbd "C-x C-j") #'dired-jump)
+(global-set-key (kbd "C-M-SPC") 'mark-sexp)
 
 ;;; UI
 
-;;(load-theme 'wheatgrass)
-;;(require 'ample-zen-theme)
 (when window-system
   (cond
    ((my/system-p 'darwin) (progn
@@ -119,7 +118,10 @@
 (use-package doom-themes
   :pin melpa
   :config
-  (load-theme 'doom-city-lights t))
+  ;;(load-theme 'doom-city-lights t)
+  (load-theme 'doom-one-light t)
+  ;;(load-theme 'doom-solarized-light t)
+)
 
 (use-package solaire-mode
   :hook
@@ -134,6 +136,7 @@
   (spaceline-emacs-theme))
 
 (use-package diminish)
+
 (use-package delight
   :pin gnu)
 
@@ -149,7 +152,6 @@
 (use-package eyebrowse
   :config
   (eyebrowse-mode t))
-
 
 ;;;; Editing
 
@@ -168,7 +170,9 @@
          ("C-?" . undo-tree-redo)
          ("C-/" . undo-tree-undo)
          ("C-_" . undo-tree-undo)
-         ("M-_" . undo-tree-redo)))
+         ("M-_" . undo-tree-redo))
+  :config
+  (global-undo-tree-mode 1))
 
 (use-package expand-region
   :bind ("M-SPC" . er/expand-region))
@@ -254,13 +258,14 @@
   (progn
     (setq projectile-completion-system 'ivy)
     (projectile-mode +1)
-    (setq projectile-switch-project-action #'projectile-vc)
+    (setq projectile-switch-project-action #'projectile-find-file)
     (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)))
 
 (use-package ag)
 
 (use-package treemacs
+  :pin melpa
   :config
   (doom-themes-treemacs-config))
 
@@ -341,7 +346,7 @@
 
 (use-package clj-refactor
   :commands (clj-refactor-mode)
-  :pin melpa-stable
+  :pin melpa
   :after (cider)
   :init
   (add-hook 'clojure-mode-hook (lambda ()
@@ -349,10 +354,15 @@
                                  (yas-minor-mode 1)
                                  (cljr-add-keybindings-with-prefix "M-RET"))))
 
-(use-package flycheck-joker
-  :pin melpa
+;; First install the package:
+(use-package flycheck-clj-kondo
+  :ensure t)
+
+;; then install the checker as soon as `clojure-mode' is loaded
+(use-package clojure-mode
+  :ensure t
   :config
-  (require 'flycheck-joker))
+  (require 'flycheck-clj-kondo))
 
 ;;;; Python
 
@@ -528,19 +538,42 @@ _s_ stop        _l_ list
 
 ;; GO
 
-(when (not (getenv "GOPATH"))
-  (setenv "GOPATH" (expand-file-name "~/go")))
-(add-to-list 'exec-path (format "%s/bin" (getenv "GOPATH")))
+;; (when (not (getenv "GOPATH"))
+;;   (setenv "GOPATH" (expand-file-name "~/go")))
+;; (add-to-list 'exec-path (format "%s/bin" (getenv "GOPATH")))
 
-(use-package go-mode
-  :defer t)
+;; (use-package go-mode
+;;   :defer t)
 
-(use-package company-go
-  :defer t
-  :after (go-mode)
-  :hook (go-mode . (lambda ()
-                     (set (make-local-variable 'company-backends) '(company-go))
-                     (company-mode))))
+;; (use-package company-go
+;;   :defer t
+;;   :after (go-mode)
+;;   :hook (go-mode . (lambda ()
+;;                      (set (make-local-variable 'company-backends) '(company-go))
+;;                      (company-mode))))
+
+;; (use-package lsp-mode
+;;   :ensure t
+;;   :commands (lsp lsp-deferred)
+;;   :hook (go-mode . lsp-deferred))
+
+;; set up before-save hooks to format buffer and add/delete imports.
+;; Make sure you don't have other gofmt/goimports hooks enabled.
+;; (defun lsp-go-install-save-hooks ()
+;;   (add-hook 'before-save-hook #'lsp-format-buffer t t)
+;;   (add-hook 'before-save-hook #'lsp-organize-imports t t))
+;; (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
+;; Optional - provides fancier overlays.
+;; (use-package lsp-ui
+;;   :ensure t
+;;   :commands lsp-ui-mode)
+
+;; company-lsp integrates company mode completion with lsp-mode.
+;; completion-at-point also works out of the box but doesn't support snippets.
+;; (use-package company-lsp
+;;   :ensure t
+;;   :commands company-lsp)
 
 ;; org mode
 
@@ -557,16 +590,25 @@ _s_ stop        _l_ list
     (setq org-agenda-files (list org-directory))
     (setq org-refile-targets
           '((nil :maxlevel . 3)
-            (org-agenda-files :maxlevel . 3)))))
+            (org-agenda-files :maxlevel . 3)))
+    (add-hook 'org-mode-hook #'(lambda ()
+                                 (visual-line-mode)
+                                 (org-indent-mode)))))
 
-;; (use-package org-bullets
-;;   :config
-;;   (org-bullets-mode)
-;;   (add-hook 'org-mode-hook #'org-bullets-mode))
+(use-package org-bullets
+  :config
+  (org-bullets-mode)
+  (add-hook 'org-mode-hook #'org-bullets-mode))
 
 (setq org-latex-listings 'minted)
 (doom-themes-org-config)
 (add-to-list 'org-latex-packages-alist '("" "minted"))
+
+;; spell check
+
+(when (executable-find "hunspell")
+  (setq-default ispell-program-name "hunspell")
+  (setq ispell-really-hunspell t))
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
